@@ -62,7 +62,7 @@ input {
     border: none;
 }
 #search-group {
-    margin-top: 5px;
+    margin-top: 6px;
 }
 #search-bar-button {
     border: none;

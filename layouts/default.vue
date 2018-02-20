@@ -1,18 +1,9 @@
 <template>
   <div class="container-fluid">
-    <topbar></topbar>    
+    <topbar />    
     <div class="row">
-      <div class="col-md-2">
-        <ul>
-          <li>Menu</li>
-          <li>Menu</li>
-          <li>Menu</li>
-          <li>Menu</li>
-          <li>Menu</li>
-          <li>Menu</li>
-        </ul>
-      </div>
-      <div class="col-md-10">
+      <sidebar />
+      <div id="nuxt-container" class="col-md-10">
         <nuxt/>
       </div>
     </div>
@@ -21,14 +12,13 @@
 
 <script>
 
-// import Vue from 'vue';
 import Topbar from '../components/Topbar.vue';
-
-// Vue.component('icon', Icon);
+import Sidebar from '../components/Sidebar.vue'
 
 export default {
   components: {
-    'topbar': Topbar
+    'topbar': Topbar,
+    'sidebar': Sidebar
   }
 }
 </script>
@@ -79,5 +69,9 @@ html
 {
   color: #fff;
   background-color: #35495e;
+}
+
+#nuxt-container {
+  position: relative;
 }
 </style>
