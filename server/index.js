@@ -2,6 +2,7 @@
 const express = require('express')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const fs = require('fs');
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
@@ -12,7 +13,16 @@ let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
 app.get('/api', (req, res) => {
-  res.send("hello api!!")
+  fs.readFile(__dirname + '/data/sidebar.json', 'utf-8', (err, data) => {
+    if (err) {
+      console.log(err)
+      res.json(err);
+    } else {
+      console.log(data)
+      data = JSON.parse(data);
+      res.json(data)
+    }
+  })  
 });
 
 
