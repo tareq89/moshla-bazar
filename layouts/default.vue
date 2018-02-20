@@ -1,16 +1,8 @@
 <template>
   <div class="container-fluid">
+    <topbar></topbar>    
     <div class="row">
-      <div class="col-md-12">
-        <p>
-          <icon name="bars" scale="4"></icon>
-        </p>
-        <h1 class="display-2">Hello World!!</h1>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-4">
+      <div class="col-md-2">
         <ul>
           <li>Menu</li>
           <li>Menu</li>
@@ -20,7 +12,7 @@
           <li>Menu</li>
         </ul>
       </div>
-      <div class="col-8">
+      <div class="col-md-10">
         <nuxt/>
       </div>
     </div>
@@ -28,14 +20,16 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import "vue-awesome/icons/bars";
-import Icon from "vue-awesome/components/Icon";
 
-Vue.component('icon', Icon);
+// import Vue from 'vue';
+import Topbar from '../components/Topbar.vue';
+
+// Vue.component('icon', Icon);
 
 export default {
-  
+  components: {
+    'topbar': Topbar
+  }
 }
 </script>
 
