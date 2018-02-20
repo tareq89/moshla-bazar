@@ -12,13 +12,11 @@ app.set('port', port)
 let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
-app.get('/api', (req, res) => {
+app.get('/api/categories', (req, res) => {
   fs.readFile(__dirname + '/data/sidebar.json', 'utf-8', (err, data) => {
-    if (err) {
-      console.log(err)
+    if (err) {      
       res.json(err);
-    } else {
-      console.log(data)
+    } else {      
       data = JSON.parse(data);
       res.json(data)
     }

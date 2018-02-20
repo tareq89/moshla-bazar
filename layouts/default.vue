@@ -1,28 +1,19 @@
 <template>
   <div class="container-fluid">
-    <topbar />    
-    <div class="row">
-      <sidebar />
-      <div id="nuxt-container" class="col-md-10">
-        <nuxt/>
-      </div>
-    </div>
+    	<topbar /> 
+      <nuxt/>      
   </div>
 </template>
 
+
 <script>
-
 import Topbar from '../components/Topbar.vue';
-import Sidebar from '../components/Sidebar.vue'
-
 export default {
   components: {
-    'topbar': Topbar,
-    'sidebar': Sidebar
+    'topbar': Topbar
   }
 }
 </script>
-
 
 <style>
 html

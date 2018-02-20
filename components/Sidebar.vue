@@ -1,19 +1,21 @@
 <template>
     <div id="side-bar" class="col-md-2">
         <ul>
-            <li>Menu</li>
-            <li>Menu</li>
-            <li>Menu</li>
-            <li>Menu</li>
-            <li>Menu</li>
-            <li>Menu</li>
+            <li v-for="(category, index) in categories" :key="index">{{ category.name }}</li>           
         </ul>
     </div>      
 </template>
 
 <script>
+
+
 export default {
-  
+    props: ["categories"],
+    data() {
+        console.log("************")
+        console.log(this.props)
+        return {};
+    }
 }
 </script>
 
