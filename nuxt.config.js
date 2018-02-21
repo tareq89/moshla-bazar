@@ -28,6 +28,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    './static/style.css'
   ],
 
   /*
