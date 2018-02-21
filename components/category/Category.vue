@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="menu">
-            <a :class="{ 'category-name-selected': isSelected, 'category-container': true }" v-on:click="expandOnceAndSelect">
-                <span >{{ category.name }}</span>
+            <a :class="{ 'category-name-selected': highlightCategory, 'category-container': true }" v-on:click="expandAndSelect">
+                {{ category.name }}
                 <span class="category-icon"  v-if="category.subcategories && category.subcategories.length > 0">
                     <span v-if="mainCategory" class="maincategory">
                         <icon name="chevron-circle-down" scale="1" :style="{verticalAlign: 'middle'}" v-if="!isSelected"></icon>
@@ -30,18 +30,31 @@ export default {
     props: ['category', 'mainCategory'],
     data() {
         return {
-            isSelected: false
+            isSelected: false,
+            highlight: false,
+        }
+    },
+    computed: {
+        highlightCategory() {
+            let category = this._props.category;            
+            if (category !== undefined && category.subcategories !== undefined && category.subcategories.length > 0 && this.isSelected) return true;
+            return false;
         }
     },
     methods: {
-        expandOnceAndSelect($event) {                        
-            if($event.target.tagName === ('path' || 'svg')) {
-                this.isSelected = !this.isSelected;
-                console.log($event.target.tagName)
-                console.log(this.isSelected)
-            } else {
-                this.isSelected = true;
-            }
+        expandAndSelect($event) {                        
+            console.log($event.target.tagName)
+            switch($event.target.tagName) {
+                case 'path':
+                case 'svg':
+                case 'SPAN': 
+                    this.isSelected = !this.isSelected;
+                    break;
+                default:
+                    this.highlight = true
+                    this.isSelected = true;
+                    break;
+            }            
         }
     }    
 }
@@ -58,8 +71,9 @@ export default {
 
 .category-icon{
     position: absolute;
-    top: 11px;
-    right: 11px;
+    top: 0px;
+    right: 0px;
+    padding: 10px;
     cursor: pointer;
 }
 
