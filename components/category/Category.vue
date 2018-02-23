@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="menu">
-            <a :class="{ 'category-name-selected': highlightCategory, 'category-container': true }" v-on:click="expandAndSelect($event, category.name)">
+            <a :class="{ 'category-name-selected': highlightCategory, 'category-container': true }" v-on:click="expandAndSelect($event, category)">
                 {{ category.name }}
                 <span class="category-icon"  v-if="category.subcategories && category.subcategories.length > 0">
                     <span v-if="mainCategory" class="maincategory">
@@ -44,22 +44,19 @@ export default {
         }
     },
     methods: {
-        expandAndSelect($event, name) {                        
-            // console.log(name)
-            // console.log($event.target.tagName)
-            this.$store.commit('push', name)
-            console.log(this.$store.state.categoryTree);
+        expandAndSelect($event, category) {                                    
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
                 case 'SPAN': 
-                    this.isSelected = !this.isSelected;
+                    this.isSelected = !this.isSelected;                    
                     break;
                 default:
                     this.highlight = true
                     this.isSelected = true;
                     break;
             }            
+            this.$store.dispatch('setCurrentContext', category);
         }
     }    
 }

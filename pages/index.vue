@@ -1,6 +1,6 @@
 <template>	   
 	<div class="row">
-		<sidebar :categories="categories"/>
+		<sidebar :categories="$store.getters.categories"/>
 		<div id="nuxt-container" class="col-md-10">
 			<section class="nuxt-container">
 				<div>
@@ -24,7 +24,7 @@
 <script>
 import Logo from '../components/Logo.vue';
 import Sidebar from '../components/Sidebar.vue';
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   components: {
@@ -32,11 +32,14 @@ export default {
     'sidebar': Sidebar
   },
   asyncData() {
-    console.log("response")
     return axios.get('http://127.0.0.1:3000/api/categories')
-        .then((response) => {
-            return { categories: response.data };
+        .then((response) => {          
+            let categories = response.data;
+            return { categories };
         });
+  },
+  created() {
+    this.$store.dispatch('setCategories', this.categories); 
   }
 }
 </script>
