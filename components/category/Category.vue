@@ -1,21 +1,21 @@
 <template>
     <div>
         <div class="menu">
-            <a :class="{ 'category-name-selected': highlightCategory, 'category-container': true }" v-on:click="expandAndSelect($event, category)">
+            <a :class="{ 'category-name-selected': category.expand, 'category-container': true }" v-on:click="expandAndSelect($event, category)">
                 {{ category.name }}
                 <span class="category-icon"  v-if="category.subcategories && category.subcategories.length > 0">
                     <span v-if="mainCategory" class="maincategory">
-                        <icon name="chevron-circle-down" scale="1" :style="{verticalAlign: 'middle'}" v-if="!isSelected"></icon>
-                        <icon name="chevron-circle-up" scale="1" :style="{verticalAlign: 'middle'}" v-if="isSelected"></icon>
+                        <icon name="chevron-circle-down" scale="1" :style="{verticalAlign: 'middle'}" v-if="!category.expand"></icon>
+                        <icon name="chevron-circle-up" scale="1" :style="{verticalAlign: 'middle'}" v-if="category.expand"></icon>
                     </span>
                     <span v-else class="subcategory">
-                        <icon name="plus" scale="1" :style="{verticalAlign: 'middle'}" v-if="!isSelected"></icon>
-                        <icon name="minus" scale="1" :style="{verticalAlign: 'middle'}" v-if="isSelected"></icon>
+                        <icon name="plus" scale="1" :style="{verticalAlign: 'middle'}" v-if="!category.expand"></icon>
+                        <icon name="minus" scale="1" :style="{verticalAlign: 'middle'}" v-if="category.expand"></icon>
                     </span>
                 </span>
             </a>
         </div>
-        <sub-category v-if="category.subcategories" :visible="!isSelected" :categories="category.subcategories"></sub-category>        
+        <sub-category v-if="category.subcategories" :visible="!category.expand" :categories="category.subcategories"></sub-category>        
     </div>
 </template>
 
@@ -28,35 +28,28 @@ import SubCategory from './SubCategory.vue';
 
 export default {    
     props: ['category', 'mainCategory'],
-    data() {
-        return {
-            isSelected: false,
-            highlight: false,
-        }
-    },
-    computed: {
-        highlightCategory() {
-            let category = this._props.category;            
-            if (category && category.subcategories && category.subcategories.length > 0 && this.isSelected) {
-                return true;
-            }
-            return false;
-        }
-    },
     methods: {
         expandAndSelect($event, category) {                                    
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
                 case 'SPAN': 
-                    this.isSelected = !this.isSelected;                    
+                    console.log('click on icons')
+                    console.log(category.expand)                    
+                    this.$store.dispatch('setExpandFlag', {
+                        nodeid: category.nodeid,
+                        expand: !category.expand
+                    });                    
                     break;
                 default:
-                    this.highlight = true
-                    this.isSelected = true;
+                    console.log('click on others')                    
+                    this.$store.dispatch('setExpandFlag', {
+                        nodeid: category.nodeid,
+                        expand: true
+                    });
+                    this.$store.dispatch('setCurrentContext', category);
                     break;
             }            
-            this.$store.dispatch('setCurrentContext', category);
         }
     }    
 }
