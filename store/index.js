@@ -37,16 +37,26 @@ const createStore = () => {
 				setExpandFlag: (state, params) => {					
 					function findNode(categories) {						
 						for(let category of categories) {
-							if(category.nodeid === params.nodeid) {
-								if((category.subcategories === undefined || category.subcategories.length == 0)) {
-									for(let _category of categories) {
-										_category.expand = false;
+							let partialNodeId = params.nodeid.slice(0, category.nodeid.length);
+
+							// close or expand menu if clicked in expand-close icon, don't affect other menu states
+							if(partialNodeId === category.nodeid) { // checking whether the current nodeid is partially matching from the beginning with the param.nodeid
+								if(category.nodeid === params.nodeid) { // checking whether the current nodeid is exactly matching with the param.nodeid
+									if((category.subcategories === undefined || category.subcategories.length == 0)) { // setting currently matched leaf nodes sibling nodes expand to false
+										for(let _category of categories) {
+											_category.expand = false;
+										}
 									}
+									category.expand = params.expand? true : !category.expand;									
+								} else if(category.subcategories && category.subcategories.length > 0) { // since current nodeid is partially matched, so desired node must be in the subcategories
+									findNode(category.subcategories);									
 								}
-								category.expand = params.expand? true : !category.expand;
-								break;
-							} else if(category.subcategories && category.subcategories.length > 0) {
-								findNode(category.subcategories);
+							} else if(params.closeOthers) { // close other expanded menu if clicked on menu text
+								category.expand = false;
+								if(category.subcategories && category.subcategories.length > 0) {
+									findNode(category.subcategories);
+								}
+
 							}
 						}
 					}
@@ -79,17 +89,15 @@ const createStore = () => {
 				setExpandFlag: (context, params) => {
 					context.commit('setExpandFlag', params);
 				},
-				setExpandFlagAndSelect: (context, nodeid) => {					
+				setExpandFlagTrueAndSelectAndCloseOthers: (context, nodeid) => {					
 					context.commit('setExpandFlag', {
 						nodeid: nodeid,
 						expand: true,
-						callback: () => {
-							context.commit('resetExpandFlag');
-						}
+						closeOthers: true
 					});
 				}
 			}
 		})
 	}
 
-	export default createStore
+	export default createStore;

@@ -33,17 +33,14 @@ export default {
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
-                case 'SPAN': 
-                    console.log('click on icons')
-                    console.log(category.expand)                    
+                case 'SPAN':            
                     this.$store.dispatch('setExpandFlag', {
                         nodeid: category.nodeid,
                         expand: !category.expand
                     });                    
                     break;
-                default:
-                    console.log('click on others')                    
-                    this.$store.dispatch('setExpandFlagAndSelect', category.nodeid);
+                default:                    
+                    this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', category.nodeid);
                     this.$store.dispatch('setCurrentContext', category);
                     break;
             }            

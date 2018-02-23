@@ -15,15 +15,9 @@ export default {
 
 
 <style>
-ul {
-    list-style: none;    
-    width: 100%;
-    padding-left: 0;    
-    background-color: white !important;
-}
-
 .visible {
     display: none;
+    transition: 2s;
 }
 
 .danechap {
