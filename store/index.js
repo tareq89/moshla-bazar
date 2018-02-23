@@ -8,38 +8,6 @@ const createStore = () => {
 			},
 			mutations: {
 				setCategories: (state, categories) => {
-					state.categories = categories;
-				},
-				setCurrentContext: (state, currentContext) => {
-					state.currentContext = currentContext;
-				},
-				setExpandFlag: (state, params) => {
-
-					function findNode(categories) {
-						for(let category of categories) {
-							if(category.nodeid === params.nodeid) {
-								if((category.subcategories === undefined || category.subcategories.length == 0)) {
-									for(let _category of categories) {
-										_category.expand = false;
-									}
-								}
-								category.expand = params.expand? true : !category.expand;
-								break;
-							} else if(category.subcategories && category.subcategories.length > 0) {
-								findNode(category.subcategories);
-							}
-						}
-					}
-					findNode(state.categories);
-				}
-			},
-			getters: {
-				categories : (state) => {
-					return state.categories;
-				}
-			},
-			actions: {
-				setCategories : (context, categories) => {
 					function customizeCategories(categories, initialIndex = 0, immediateRoots = [], initialurl = '') {
 						for (let index in categories) {
 							let category = categories[index];
@@ -61,6 +29,48 @@ const createStore = () => {
 						}
 					}
 					customizeCategories(categories);
+					state.categories = categories;
+				},
+				setCurrentContext: (state, currentContext) => {
+					state.currentContext = currentContext;
+				},
+				setExpandFlag: (state, params) => {					
+					function findNode(categories) {						
+						for(let category of categories) {
+							if(category.nodeid === params.nodeid) {
+								if((category.subcategories === undefined || category.subcategories.length == 0)) {
+									for(let _category of categories) {
+										_category.expand = false;
+									}
+								}
+								category.expand = params.expand? true : !category.expand;
+								break;
+							} else if(category.subcategories && category.subcategories.length > 0) {
+								findNode(category.subcategories);
+							}
+						}
+					}
+					findNode(state.categories);
+				},
+				resetExpandFlag: (state) => {
+					function reset(categories) {
+						for(let category of categories) {
+							category.expand = false;
+							if(category.subcategories && category.subcategories.length > 0) {
+								reset(category.subcategories);
+							}
+						}
+					}
+					reset(state.categories);
+				}
+			},
+			getters: {
+				categories : (state) => {
+					return state.categories;
+				}
+			},
+			actions: {
+				setCategories : (context, categories) => {					
 					context.commit('setCategories', categories);
 				},
 				setCurrentContext: (context, currentContext) => {
@@ -68,6 +78,15 @@ const createStore = () => {
 				},
 				setExpandFlag: (context, params) => {
 					context.commit('setExpandFlag', params);
+				},
+				setExpandFlagAndSelect: (context, nodeid) => {					
+					context.commit('setExpandFlag', {
+						nodeid: nodeid,
+						expand: true,
+						callback: () => {
+							context.commit('resetExpandFlag');
+						}
+					});
 				}
 			}
 		})

@@ -43,10 +43,7 @@ export default {
                     break;
                 default:
                     console.log('click on others')                    
-                    this.$store.dispatch('setExpandFlag', {
-                        nodeid: category.nodeid,
-                        expand: true
-                    });
+                    this.$store.dispatch('setExpandFlagAndSelect', category.nodeid);
                     this.$store.dispatch('setCurrentContext', category);
                     break;
             }            
