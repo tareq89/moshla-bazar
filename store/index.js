@@ -4,7 +4,8 @@ const createStore = () => {
 		return new Vuex.Store({
 			state: {
 				currentContext: {},
-				categories: []
+				categories: [],
+				sidebarOpen: true
 			},
 			mutations: {
 				setCategories: (state, categories) => {
@@ -62,21 +63,16 @@ const createStore = () => {
 					}
 					findNode(state.categories);
 				},
-				resetExpandFlag: (state) => {
-					function reset(categories) {
-						for(let category of categories) {
-							category.expand = false;
-							if(category.subcategories && category.subcategories.length > 0) {
-								reset(category.subcategories);
-							}
-						}
-					}
-					reset(state.categories);
+				toggleSidebar: (state) => {
+					state.sidebarOpen = !state.sidebarOpen;					
 				}
 			},
 			getters: {
 				categories : (state) => {
 					return state.categories;
+				},
+				sidebarOpen: (state) => {
+					return state.sidebarOpen;
 				}
 			},
 			actions: {
@@ -95,6 +91,9 @@ const createStore = () => {
 						expand: true,
 						closeOthers: true
 					});
+				},
+				toggleSidebar: (context) => {
+					context.commit('toggleSidebar');
 				}
 			}
 		})

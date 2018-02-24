@@ -1,7 +1,7 @@
 <template>	   
 	<div class="row">
-		<sidebar :categories="$store.getters.categories"/>
-		<div id="nuxt-container" class="col-md-10">
+		<sidebar v-if="$store.getters.sidebarOpen" :categories="$store.getters.categories"/>
+		<div id="nuxt-container" :class="nuxtContainerClasses">
 			<section class="nuxt-container">
 				<div>
 					<logo/>
@@ -30,6 +30,14 @@ export default {
   components: {
 	'logo': Logo,	
     'sidebar': Sidebar
+  },
+  computed: {
+    nuxtContainerClasses: function() {
+      return {
+        'col-lg-9 col-md-8 col-sm-6 col-xs-6': this.$store.getters.sidebarOpen,
+        'col-lg-12 col-md-12 col-sm-12 col-xs-12': !this.$store.getters.sidebarOpen
+      }
+    }
   },
   asyncData() {
     return axios.get('http://127.0.0.1:3000/api/categories')

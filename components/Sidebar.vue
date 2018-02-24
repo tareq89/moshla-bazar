@@ -1,5 +1,5 @@
 <template>
-    <div id="side-bar" class="col-md-2">
+    <div id="side-bar" class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
         <div id="category-container">ALL Categories</div>       
         <category v-for="(category, index) in categories" :key="index" :category="category" :mainCategory="true"></category>        
     </div>      

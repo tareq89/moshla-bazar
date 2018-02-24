@@ -1,7 +1,7 @@
 <template>
     <div class="row" id="topbar">
         <div class="col-md-1">
-            <button id="menu-bar-button">                
+            <button id="menu-bar-button" v-on:click="$store.dispatch('toggleSidebar')">
                 <icon name="bars" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
             </button>
         </div>
@@ -15,16 +15,16 @@
                 </b-input-group-addon>
             </b-input-group>
         </div>
-        <div class="col-md-1 help-link">            
+        <div class="col-md-1 help-link">
             <nuxt-link to="/about">Need Help ?</nuxt-link>
         </div>
-        <div class="col-md-1 help-link">            
+        <div class="col-md-1 help-link">
             <nuxt-link to="/about"><span>EN</span>| <span>বাং</span></nuxt-link>
         </div>
-        <div id="sign-in" class="col-md-1 help-link">            
+        <div id="sign-in" class="col-md-1 help-link">
             <nuxt-link to="/about">Sign in</nuxt-link>
         </div>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -42,21 +42,23 @@ export default {
 
 <style scoped>
 #topbar {
-    background-color: rgb(255, 216, 117);
+    background-color: #ffd875;
 }
-#menu-bar-button {    
-    background: 0 0;
+#menu-bar-button {
+    background-color: #ffd875;
     margin-top: 5px;
-    margin-bottom: 5px;        
-    border-radius: 2px;  
-    border: none;      
+    margin-bottom: 5px;
+    border-radius: 2px;
+    border: none;
     cursor: pointer;
 }
-#menu-bar-button :hover {
-    transition-duration: 0.4s; 
-    background-color: rgb(227, 109, 6) !important;
-}
 
+
+button:active,
+button:hover,
+button:focus {
+    outline: 0px !important;  
+}
 
 input {
     border: none;
@@ -84,11 +86,11 @@ a {
     font-size: 14px;
     font-weight: 700;
     line-height: 50px;
-    display: flex;        
-    align-items: center;    
+    display: flex;
+    align-items: center;
     justify-content: center;
     vertical-align: middle;
-    color: black;    
+    color: black;
 }
 
 #sign-in {
