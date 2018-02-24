@@ -24,7 +24,6 @@ ul {
     padding-left: 0;    
 }
 
-
 #side-bar {    
     border-right: 1px solid rgb(176, 172, 163);    
     width: 100%;

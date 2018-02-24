@@ -22,7 +22,7 @@ const createStore = () => {
 							category.expand = false;
 							category.url = url.toLowerCase().replace(' ', '-');
 							category.immediateroots = immediateRoots.slice();
-							category.immediateroots.push(category.name);
+							category.immediateroots.push({ name :category.name, nodeid: category.nodeid });
 
 							if(category.subcategories && category.subcategories.length > 0) {
 								customizeCategories(category.subcategories, category.nodeid, category.immediateroots, category.url);
@@ -32,8 +32,27 @@ const createStore = () => {
 					customizeCategories(categories);
 					state.categories = categories;
 				},
-				setCurrentContext: (state, currentContext) => {
-					state.currentContext = currentContext;
+				setCurrentContext: (state, currentContext) => {					
+					if(typeof currentContext === 'string') {
+						function findNode(categories) {
+							for(let category of categories) {
+								let partialNodeId = currentContext.slice(0, category.nodeid.length);
+								if(partialNodeId === category.nodeid) {
+									if(category.nodeid === currentContext) {
+										state.currentContext = category;
+										console.log(currentContext)
+										console.log(state.currentContext)
+										break;
+									} else if (category.subcategories && category.subcategories.length > 0) {
+										findNode(category.subcategories);
+									}
+								}
+							}
+						}
+						findNode(state.categories);
+					} else {
+						state.currentContext = currentContext;
+					}
 				},
 				setExpandFlag: (state, params) => {					
 					function findNode(categories) {						
@@ -73,6 +92,9 @@ const createStore = () => {
 				},
 				sidebarOpen: (state) => {
 					return state.sidebarOpen;
+				},
+				currentContext: (state) => {
+					return state.currentContext;
 				}
 			},
 			actions: {

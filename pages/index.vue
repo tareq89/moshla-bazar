@@ -2,6 +2,7 @@
 	<div class="row">
 		<sidebar v-if="$store.getters.sidebarOpen" :categories="$store.getters.categories"/>
 		<div id="nuxt-container" :class="nuxtContainerClasses">
+      <category-nested-link />
 			<section class="nuxt-container">
 				<div>
 					<logo/>
@@ -24,12 +25,14 @@
 <script>
 import Logo from '../components/Logo.vue';
 import Sidebar from '../components/Sidebar.vue';
+import CategoryNestedLink from '../components/contents/CategoryNestedLink';
 import axios from 'axios';
 
 export default {
   components: {
 	'logo': Logo,	
-    'sidebar': Sidebar
+    'sidebar': Sidebar,
+    'category-nested-link': CategoryNestedLink
   },
   computed: {
     nuxtContainerClasses: function() {
