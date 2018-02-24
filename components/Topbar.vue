@@ -1,11 +1,14 @@
 <template>
     <div class="row" id="topbar">
-        <div class="col-md-1">
+        <div>
             <button id="menu-bar-button" v-on:click="$store.dispatch('toggleSidebar')">
                 <icon name="bars" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
             </button>
         </div>
-        <div class="col-md-8">
+        <div id="home" class="col-md-1">
+            <h2>Deligram</h2>
+        </div>
+        <div class="col-md-7">
             <b-input-group id="search-group">
                 <b-form-input placeholder="search for mashla ex: gorom moshla"></b-form-input>
                 <b-input-group-addon>
@@ -16,7 +19,7 @@
             </b-input-group>
         </div>
         <div class="col-md-1 help-link">
-            <nuxt-link to="/about">Need Help ?</nuxt-link>
+            <nuxt-link to="/about">Need Help?</nuxt-link>
         </div>
         <div class="col-md-1 help-link">
             <nuxt-link to="/about"><span>EN</span>| <span>বাং</span></nuxt-link>
@@ -41,10 +44,19 @@ export default {
 </script>
 
 <style scoped>
+#home {
+    margin: auto;
+    display: block;
+}
+h2 {
+    font-style: italic;
+    font-weight: bolder;    
+}
 #topbar {
     background-color: #ffd875;
 }
 #menu-bar-button {
+    padding: 10px;
     background-color: #ffd875;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -52,7 +64,6 @@ export default {
     border: none;
     cursor: pointer;
 }
-
 
 button:active,
 button:hover,
@@ -91,6 +102,7 @@ a {
     justify-content: center;
     vertical-align: middle;
     color: black;
+    white-space: nowrap;
 }
 
 #sign-in {

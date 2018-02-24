@@ -5,17 +5,7 @@
       <category-nested-link />
 			<section class="nuxt-container">
 				<div>
-					<logo/>
-					<h1 class="title">
-						moshla-bazar
-					</h1>
-					<h2 class="subtitle">
-						My best Nuxt.js project
-					</h2>
-					<div class="links">
-						<a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-						<a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-					</div>
+					<category-display />
 				</div>
 			</section>
 		</div>
@@ -26,13 +16,15 @@
 import Logo from '../components/Logo.vue';
 import Sidebar from '../components/Sidebar.vue';
 import CategoryNestedLink from '../components/contents/CategoryNestedLink';
+import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
 import axios from 'axios';
 
 export default {
   components: {
 	'logo': Logo,	
     'sidebar': Sidebar,
-    'category-nested-link': CategoryNestedLink
+    'category-nested-link': CategoryNestedLink,
+    'category-display': CategoryDisplay
   },
   computed: {
     nuxtContainerClasses: function() {
