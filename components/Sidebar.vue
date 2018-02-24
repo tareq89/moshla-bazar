@@ -1,6 +1,6 @@
 <template>
     <div id="side-bar" class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
-        <div id="category-container">ALL Categories</div>       
+        <div id="category-container" @click="clickAllCategory">ALL Categories</div>       
         <category v-for="(category, index) in categories" :key="index" :category="category" :mainCategory="true"></category>        
     </div>      
 </template>
@@ -13,7 +13,13 @@ import SubCategory from '../components/category/SubCategory.vue';
 Vue.component('category', Category);
 Vue.component('sub-category', SubCategory);
 export default {
-    props: ["categories"]
+    props: ["categories"],
+    methods: {
+        clickAllCategory: function() {
+            this.$store.dispatch('closeAllMenue');
+            this.$store.dispatch('setCurrentContext', {});
+        }
+    }
 }
 </script>
 

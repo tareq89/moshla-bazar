@@ -39,9 +39,7 @@ const createStore = () => {
 								let partialNodeId = currentContext.slice(0, category.nodeid.length);
 								if(partialNodeId === category.nodeid) {
 									if(category.nodeid === currentContext) {
-										state.currentContext = category;
-										console.log(currentContext)
-										console.log(state.currentContext)
+										state.currentContext = category;										
 										break;
 									} else if (category.subcategories && category.subcategories.length > 0) {
 										findNode(category.subcategories);
@@ -50,7 +48,7 @@ const createStore = () => {
 							}
 						}
 						findNode(state.categories);
-					} else {
+					} else if(typeof currentContext === 'object'){
 						state.currentContext = currentContext;
 					}
 				},
@@ -81,6 +79,18 @@ const createStore = () => {
 						}
 					}
 					findNode(state.categories);
+				},
+				closeAllMenue: (state) => {
+					function keepClosing(categories) {
+						for(let category of categories) {
+							category.expand = false;
+							if(category.subcategories && category.subcategories.length > 0) {
+								keepClosing(category.subcategories);
+							}
+						}						
+					}
+					keepClosing(state.categories);
+					
 				},
 				toggleSidebar: (state) => {
 					state.sidebarOpen = !state.sidebarOpen;					
@@ -113,6 +123,9 @@ const createStore = () => {
 						expand: true,
 						closeOthers: true
 					});
+				},
+				closeAllMenue: (context) => {
+					context.commit('closeAllMenue');
 				},
 				toggleSidebar: (context) => {
 					context.commit('toggleSidebar');
