@@ -55,8 +55,7 @@ h2 {
 #topbar {
     background-color: #ffd875;
 }
-#menu-bar-button {
-    padding: 10px;
+#menu-bar-button {    
     background-color: #ffd875;
     margin-top: 5px;
     margin-bottom: 5px;

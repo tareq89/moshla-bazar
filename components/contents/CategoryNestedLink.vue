@@ -1,5 +1,5 @@
 <template>
-    <div id="nested-links">
+    <div id="nested-links" class="row">
         <span> 
             <a v-on:click="clickAllCategory()">
                 <span>All Categories</span>

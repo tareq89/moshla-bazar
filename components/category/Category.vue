@@ -29,7 +29,7 @@ import SubCategory from './SubCategory.vue';
 export default {    
     props: ['category', 'mainCategory'],
     methods: {
-        expandAndSelect($event, category) {                                    
+        expandAndSelect($event, category) {  
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':

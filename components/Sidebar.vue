@@ -33,10 +33,10 @@ ul {
 #side-bar {    
     border-right: 1px solid rgb(176, 172, 163);    
     width: 100%;
-    height: 100vh;
+    height: 100vh;    
+    overflow: auto;        
     z-index: 10;
     font-size: 1em;
-    overflow: auto;        
 }
 
 #category-container {

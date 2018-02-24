@@ -6,14 +6,12 @@
 </template>
 
 <script>
-import Logo from '../components/Logo.vue';
-import Sidebar from '../components/Sidebar.vue';
-import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
+import Sidebar from '../../components/Sidebar.vue';
+import CategoryDisplay from '../../components/contents/CategoryDisplay.vue';
 import axios from 'axios';
 
 export default {
-  components: {
-	  'logo': Logo,	
+  components: {	  
     'sidebar': Sidebar,    
     'category-display': CategoryDisplay
   },  
