@@ -37,7 +37,16 @@ export default {
                     this.$store.dispatch('setExpandFlag', {
                         nodeid: category.nodeid,
                         expand: !category.expand
-                    });                    
+                    });
+                    if(category.expand === false) {                        
+                        // if closing a _parent menu, then set the context = parent of that _parent manu
+                        let nodeid = category.nodeid.slice(0, category.nodeid.length -1);                        
+                        if(nodeid === '0') {
+                            this.$store.dispatch('setCurrentContext', {});    
+                        } else {
+                            this.$store.dispatch('setCurrentContext', nodeid);
+                        }
+                    }
                     break;
                 default:                    
                     this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', category.nodeid);
@@ -50,6 +59,16 @@ export default {
 </script>
 
 <style scoped>
+.menu {
+    color: grey;
+}
+.category-container :active {
+    color: black !important;
+}
+.menu :hover {
+    background-color: #ffd875;
+    font-weight: 700;
+}
 
 .category-container {
     position: relative;

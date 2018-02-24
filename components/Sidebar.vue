@@ -36,7 +36,7 @@ ul {
     height: 100vh;
     z-index: 10;
     font-size: 1em;
-    overflow: auto;    
+    overflow: auto;        
 }
 
 #category-container {

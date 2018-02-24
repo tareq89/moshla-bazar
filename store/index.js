@@ -66,6 +66,17 @@ const createStore = () => {
 										}
 									}
 									category.expand = params.expand? true : !category.expand;									
+									if(params.closeOthers && category.subcategories && category.subcategories.length > 0) {										
+										function keepClosing(categories) {
+											for(let category of categories) {
+												category.expand = false;
+												if(category.subcategories && category.subcategories.length > 0) {
+													keepClosing(category.subcategories);
+												}
+											}						
+										}
+										keepClosing(category.subcategories);
+									}									
 								} else if(category.subcategories && category.subcategories.length > 0) { // since current nodeid is partially matched, so desired node must be in the subcategories
 									findNode(category.subcategories);									
 								}

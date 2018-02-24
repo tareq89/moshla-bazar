@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="nested-links">
         <span> 
             <a v-on:click="clickAllCategory()">
                 <span>All Categories</span>
@@ -23,13 +23,13 @@ export default {
             this.$store.dispatch('setCurrentContext', {});
       },
       click: function(nodeid) {            
+            this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', nodeid);
             this.$store.dispatch('setCurrentContext', nodeid);
       }
   },
   computed: {
       currentContextLength () {
-          const length = Object.keys(this.$store.getters.currentContext).length;
-          console.log(length>0)
+          const length = Object.keys(this.$store.getters.currentContext).length;          
           return (length > 0);
       }
   }  
@@ -38,6 +38,9 @@ export default {
 
 
 <style scoped>
+#nested-links {
+    padding: 10px;
+}
 span {
     font-weight: 600;
     cursor: pointer;
