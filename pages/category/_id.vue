@@ -1,12 +1,12 @@
 <template>	
-	<category-display />
+    <category-display />
 </template>
 
 <script>
 import axios from 'axios';
-import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
+import CategoryDisplay from '../../components/contents/CategoryDisplay.vue';
 export default {
-	components: {
+    components: {
 		'category-display': CategoryDisplay
 	},
   	asyncData(context) {	  	
@@ -18,8 +18,9 @@ export default {
   	},
   	created() {		
 		if(this.$store.getters.categories.length == 0) {
-			this.$store.dispatch('setCategories', this.categories); 
-		}    
+            this.$store.dispatch('setCategories', this.categories);            
+            this.$store.dispatch('findAndSetContextByUrl', this.$route.params.id);
+		}
   	}
 }
 </script>

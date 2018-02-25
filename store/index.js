@@ -32,7 +32,7 @@ const createStore = () => {
 					customizeCategories(categories);
 					state.categories = categories;
 				},
-				setCurrentContext: (state, { context, router}) => {	
+				setCurrentContext: (state, { context, router}) => {						
 					if(typeof context === 'string') {
 						function findNode(categories) {
 							for(let category of categories) {
@@ -52,10 +52,23 @@ const createStore = () => {
 						state.currentContext = context;
 					}					
 					if(state.currentContext.url) {
-						router.push('/' + state.currentContext.url);
+						router.push('/category/' + state.currentContext.url);
 					} else {					
 						router.push('/');
 					}
+				},
+				findAndSetContextByUrl: (state, url) => {
+					function findNodeByUrl(categories) {
+						for(let category of categories) {
+							if(category.url === url) {
+								state.currentContext = category;
+								break;
+							} else if(category.subcategories && category.subcategories.length > 0) {
+								findNodeByUrl(category.subcategories);
+							}
+						}
+					}
+					findNodeByUrl(state.categories);
 				},
 				setExpandFlag: (state, params) => {					
 					function findNode(categories) {						
@@ -133,8 +146,11 @@ const createStore = () => {
 				setCategories : (context, categories) => {					
 					context.commit('setCategories', categories);
 				},
-				setCurrentContext: (context, currentContext) => {					
+				setCurrentContext: (context, currentContext) => {										
 					context.commit('setCurrentContext', currentContext);
+				},
+				findAndSetContextByUrl: (context, url) => {
+					context.commit('findAndSetContextByUrl', url);
 				},
 				setExpandFlag: (context, params) => {
 					context.commit('setExpandFlag', params);

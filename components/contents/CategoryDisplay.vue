@@ -21,23 +21,7 @@ export default {
     components: {
         'category-nested-link': CategoryNestedLink,
         'sub-category-display': SubCategoryDisplay
-    },
-    created() {
-        console.log('categeory display Created')
-        if(this.$store.getters.categories.length === 0) {
-            axios.get('http://127.0.0.1:3000/api/categories')
-                .then((response) => {          
-                    let categories = response.data;
-                    console.log('Loaded data inside category display')
-                    this.$store.dispatch('setCategories', categories);
-                    console.log(this.$route.params.id)
-                    this.$store.dispatch('setCurrentContext', {
-                        context: this.$route.params.id,
-                        router: this.$router
-                    }); 
-                });
-        }
-    },    
+    },   
     computed: {
         nuxtContainerClasses: function() {
             return {

@@ -33,16 +33,14 @@ export default {
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
-                case 'SPAN':
-                    console.log(category)
+                case 'SPAN':                    
                     this.$store.dispatch('setExpandFlag', {
                         nodeid: category.nodeid,
                         expand: !category.expand
                     });
                     if(category.expand === false) {                        
                         // if closing a _parent menu, then set the context = parent of that _parent manu
-                        let nodeid = category.nodeid.slice(0, category.nodeid.length -1);
-                        console.log(nodeid)
+                        let nodeid = category.nodeid.slice(0, category.nodeid.length -1);                     
                         if(nodeid === '0') {
                             this.$store.dispatch('setCurrentContext', {
                                 context: {},

@@ -18,18 +18,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  router: {
-    extendRoutes (routes, resolve) {
-      console.log("*****************************************************************************")
-      console.log(routes)
-      console.log("*****************************************************************************")
-      routes.push({
-        name: 'category',
-        path: '/:id',
-        component: resolve(__dirname, 'components/contents/CategoryDisplay.vue')
-      })
-    }
-  },
+
   /*
   ** Customize the progress-bar color
   */
