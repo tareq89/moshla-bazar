@@ -20,11 +20,17 @@ export default {
   methods: {
       clickAllCategory: function() {
             this.$store.dispatch('closeAllMenue');
-            this.$store.dispatch('setCurrentContext', {});
+            this.$store.dispatch('setCurrentContext', {
+                context: {},
+                router: this.$router
+            });
       },
       click: function(nodeid) {            
             this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', nodeid);
-            this.$store.dispatch('setCurrentContext', nodeid);
+            this.$store.dispatch('setCurrentContext', {
+                context: nodeid,
+                router: this.$router
+            });
       }
   },
   computed: {

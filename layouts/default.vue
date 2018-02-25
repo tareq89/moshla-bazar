@@ -1,16 +1,21 @@
 <template>
   <div class="container-fluid">
     	<topbar /> 
-      <nuxt/>      
+      <div class="row">
+        <sidebar v-if="$store.getters.sidebarOpen" :categories="$store.getters.categories"/>
+        <nuxt/>     
+      </div>
   </div>
 </template>
 
 
 <script>
 import Topbar from '../components/Topbar.vue';
+import Sidebar from '../components/Sidebar.vue'
 export default {
   components: {
-    'topbar': Topbar
+    'topbar': Topbar,
+    'sidebar': Sidebar
   }
 }
 </script>

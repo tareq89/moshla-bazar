@@ -29,7 +29,7 @@ import SubCategory from './SubCategory.vue';
 export default {    
     props: ['category', 'mainCategory'],
     methods: {
-        expandAndSelect($event, category) {  
+        expandAndSelect($event, category) {            
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
@@ -42,15 +42,24 @@ export default {
                         // if closing a _parent menu, then set the context = parent of that _parent manu
                         let nodeid = category.nodeid.slice(0, category.nodeid.length -1);                        
                         if(nodeid === '0') {
-                            this.$store.dispatch('setCurrentContext', {});    
+                            this.$store.dispatch('setCurrentContext', {
+                                context: {},
+                                router: this.$router
+                            });    
                         } else {
-                            this.$store.dispatch('setCurrentContext', nodeid);
+                            this.$store.dispatch('setCurrentContext', {
+                                context: nodeid,
+                                router: this.$router
+                            });
                         }
                     }
                     break;
                 default:                    
                     this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', category.nodeid);
-                    this.$store.dispatch('setCurrentContext', category);
+                    this.$store.dispatch('setCurrentContext', {
+                        context: category,
+                        router: this.$router
+                    });                    
                     break;
             }            
         }

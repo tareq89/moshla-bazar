@@ -1,30 +1,19 @@
-<template>	   
-	<div class="row">
-		<sidebar v-if="$store.getters.sidebarOpen" :categories="$store.getters.categories"/>
-		<category-display />		
-	</div>
+<template>	
+  <router-view></router-view>
 </template>
 
 <script>
-import Logo from '../components/Logo.vue';
-import Sidebar from '../components/Sidebar.vue';
-import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
 import axios from 'axios';
 
 export default {
-  components: {
-	  'logo': Logo,	
-    'sidebar': Sidebar,    
-    'category-display': CategoryDisplay
-  },  
   asyncData() {
     return axios.get('http://127.0.0.1:3000/api/categories')
         .then((response) => {          
-            let categories = response.data;
+          let categories = response.data;
             return { categories };
         });
   },
-  created() {
+  created() { 
     this.$store.dispatch('setCategories', this.categories); 
   }
 }
