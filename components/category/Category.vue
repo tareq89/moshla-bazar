@@ -27,20 +27,22 @@ import 'vue-awesome/icons/minus';
 import SubCategory from './SubCategory.vue';
 
 export default {    
-    props: ['category', 'mainCategory'],
+    props: ['category', 'mainCategory'],    
     methods: {
         expandAndSelect($event, category) {            
             switch($event.target.tagName) {
                 case 'path':
                 case 'svg':
-                case 'SPAN':            
+                case 'SPAN':
+                    console.log(category)
                     this.$store.dispatch('setExpandFlag', {
                         nodeid: category.nodeid,
                         expand: !category.expand
                     });
                     if(category.expand === false) {                        
                         // if closing a _parent menu, then set the context = parent of that _parent manu
-                        let nodeid = category.nodeid.slice(0, category.nodeid.length -1);                        
+                        let nodeid = category.nodeid.slice(0, category.nodeid.length -1);
+                        console.log(nodeid)
                         if(nodeid === '0') {
                             this.$store.dispatch('setCurrentContext', {
                                 context: {},

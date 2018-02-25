@@ -50,9 +50,12 @@ const createStore = () => {
 						findNode(state.categories);
 					} else if(typeof context === 'object'){
 						state.currentContext = context;
+					}					
+					if(state.currentContext.url) {
+						router.push('/' + state.currentContext.url);
+					} else {					
+						router.push('/');
 					}
-					console.log(state.currentContext)
-					router.push('/' + state.currentContext.url);
 				},
 				setExpandFlag: (state, params) => {					
 					function findNode(categories) {						
@@ -60,9 +63,13 @@ const createStore = () => {
 							let partialNodeId = params.nodeid.slice(0, category.nodeid.length);
 
 							// close or expand menu if clicked in expand-close icon, don't affect other menu states
-							if(partialNodeId === category.nodeid) { // checking whether the current nodeid is partially matching from the beginning with the param.nodeid
-								if(category.nodeid === params.nodeid) { // checking whether the current nodeid is exactly matching with the param.nodeid
-									if((category.subcategories === undefined || category.subcategories.length == 0)) { // setting currently matched leaf nodes sibling nodes expand to false
+							
+							// checking whether the current nodeid is partially matching from the beginning with the param.nodeid
+							if(partialNodeId === category.nodeid) { 
+								// checking whether the current nodeid is exactly matching with the param.nodeid
+								if(category.nodeid === params.nodeid) { 
+									// setting currently matched leaf nodes sibling nodes expand to false
+									if((category.subcategories === undefined || category.subcategories.length == 0)) { 
 										for(let _category of categories) {
 											_category.expand = false;
 										}
@@ -79,10 +86,12 @@ const createStore = () => {
 										}
 										keepClosing(category.subcategories);
 									}									
-								} else if(category.subcategories && category.subcategories.length > 0) { // since current nodeid is partially matched, so desired node must be in the subcategories
+								// since current nodeid is partially matched, so desired node must be in the subcategories
+								} else if(category.subcategories && category.subcategories.length > 0) { 
 									findNode(category.subcategories);									
 								}
-							} else if(params.closeOthers) { // close other expanded menu if clicked on menu text
+							// close other expanded menu if clicked on menu text
+							} else if(params.closeOthers) { 
 								category.expand = false;
 								if(category.subcategories && category.subcategories.length > 0) {
 									findNode(category.subcategories);

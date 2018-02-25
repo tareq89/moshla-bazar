@@ -6,16 +6,19 @@
 import axios from 'axios';
 
 export default {
-  asyncData() {
-    return axios.get('http://127.0.0.1:3000/api/categories')
-        .then((response) => {          
-          let categories = response.data;
-            return { categories };
-        });
-  },
-  created() { 
-    this.$store.dispatch('setCategories', this.categories); 
-  }
+  	asyncData(context) {	  	
+		return axios.get('http://127.0.0.1:3000/api/categories')
+			.then((response) => {          
+				let categories = response.data;
+				console.log('Loaded data from Server inside async')
+				return { categories };
+			});
+  	},
+  	created() {		
+		if(this.$store.getters.categories.length == 0) {
+			this.$store.dispatch('setCategories', this.categories); 
+		}    
+  	}
 }
 </script>
 
