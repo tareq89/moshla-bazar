@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{ visible: visible }">
+  <div v-bind:class="{ visible: visible }">      
       <category class="danechap" v-for="(category, index) in categories"  
             v-bind:key="index" :category="category" :shouldHighlightList="!visible"></category>
   </div>
@@ -15,15 +15,9 @@ export default {
 
 
 <style>
-ul {
-    list-style: none;    
-    width: 100%;
-    padding-left: 0;    
-    background-color: white !important;
-}
-
 .visible {
     display: none;
+    transition: 2s;
 }
 
 .danechap {
