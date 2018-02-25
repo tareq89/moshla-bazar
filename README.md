@@ -1,6 +1,6 @@
 # moshla-bazar
 
-> My best Nuxt.js project
+> My first Nuxt.js project
 
 ## Build Setup
 
@@ -19,4 +19,3 @@ $ yarn start
 $ yarn run generate
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
