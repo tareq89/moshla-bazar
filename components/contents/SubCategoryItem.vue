@@ -1,6 +1,6 @@
 <template>
     <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 item">
-        <img class="img-thumbnail" src="https://placeimg.com/400/300/any?3-1" alt="">
+        <img class="img-thumbnail" :src="randomImageSrc" alt="">
         <div class="details">
             <h5 class="text-center">{{ name }}</h5>
             <button class="add-to-cart">Add to Cart</button>
@@ -11,7 +11,16 @@
 
 <script>
 export default {
-    props: ['name']    
+    props: ['name'],
+    computed: {
+        randomImageSrc() {
+            let firstNumber = (Math.random() * 10).toPrecision(1);
+            let secondNumber = (Math.random() * 10).toPrecision(1);
+            let randomImageId = `${firstNumber}-${secondNumber}`;
+            let imageUrl = `https://placeimg.com/400/300/any?${randomImageId}`;
+            return imageUrl;
+        }
+    }
 }
 </script>
 
