@@ -16,8 +16,23 @@
             <div id="cart-body-close" @click="toggle">
                 <icon name="arrow-circle-o-right" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
             </div>
+            <div class="text-center">
+                <span>
+                    <b>Total Item: {{ 5 }}</b>
+                </span>
+            </div>
 
-            <cart-item />
+            <cart-item /><cart-item /><cart-item /><cart-item />
+            <cart-item /><cart-item /><cart-item /><cart-item />
+
+            <div id="check-out">
+                <div id="total-taka">
+                    <div>  Total : ৳ 1200</div>
+                </div>                
+                <div class="place-order">
+                    <div>Place Order</div>                    
+                </div>
+            </div>
         </div>
   </div>
 </template>
@@ -85,12 +100,12 @@ export default {
 
 #cart-body { 
     z-index: 100;
-    position: fixed;
-    top: 50px;
+    position: fixed;    
     right: 0;       
     height: 100vh;
     width: 15vw;
     background-color: white;
+    overflow: auto;
 }
 
 #cart-body-title {
@@ -108,5 +123,29 @@ export default {
     top: 16px;
     right: 13px;
     cursor: pointer;
+}
+
+#check-out {
+    margin-top: -12px;    
+    height: 100px;
+    padding: 10px;
+}
+#total-taka {
+    text-align: right;
+    font-size: 16px;
+    margin: 0px 15px 10px 0px;
+}
+.place-order {
+    background-color: tomato;
+    border: 1px solid black;
+    line-height: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+div.place-order :active {
+    background-color: red !important;
+
 }
 </style>
