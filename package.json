@@ -6,9 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "generate": "nuxt generate",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 NPM_CONFIG_PRODUCTION=false node server/index.js",
-    "generate": "nuxt generate"
+    "prodStart" : "cross-env NODE_ENV=production HOST=0.0.0.0 NPM_CONFIG_PRODUCTION=false node server/index.js",
+    "start": "npm run build | npm run prodStart"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
