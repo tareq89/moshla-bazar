@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid">
-    	<topbar /> 
+      <cart />
+    	<topbar />
       <div class="row">
         <sidebar v-if="$store.getters.sidebarOpen" :categories="$store.getters.categories"/>
         <nuxt/>     
@@ -11,11 +12,14 @@
 
 <script>
 import Topbar from '../components/Topbar.vue';
-import Sidebar from '../components/Sidebar.vue'
+import Sidebar from '../components/Sidebar.vue';
+import Cart from '../components/Cart.vue';
+
 export default {
   components: {
     'topbar': Topbar,
-    'sidebar': Sidebar
+    'sidebar': Sidebar,
+    'cart': Cart
   }
 }
 </script>
