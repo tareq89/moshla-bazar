@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=51574 NPM_CONFIG_PRODUCTION=false node server/index.js",
+    "start": "cross-env NODE_ENV=production HOST=0.0.0.0 NPM_CONFIG_PRODUCTION=false node server/index.js",
     "generate": "nuxt generate",
     "heroku-postbuild": "npm run build"
   },
