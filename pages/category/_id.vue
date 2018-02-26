@@ -10,7 +10,7 @@ export default {
 		'category-display': CategoryDisplay
 	},
   	asyncData(context) {	  	
-		return axios.get('http://0.0.0.0/api/categories')
+		return axios.get('http://0.0.0.0:51574/api/categories')
 			.then((response) => {          
 				let categories = response.data;				
 				return { categories };
