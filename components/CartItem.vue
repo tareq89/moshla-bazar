@@ -1,35 +1,35 @@
 <template>
-    <div class="cart-item">
+    <div class="cart-item">        
         <div class="remove-button">
-            <span>
+            <span @click="$store.dispatch('removeCartItem', {item: item, remove: true})">
                 <icon name="remove" scale="1" :style="{ verticalAlign: 'middle'}"></icon>
             </span>
         </div>
         <div>
             <div>
                 <div></div>
-                <img src="https://placeimg.com/400/300/any?2-0.5" alt="">
+                <img :src="item.imageUrl" alt="">
             </div>
-            <div><a href="/product/t-shirt-batman" class="_3jADJAoCoJ_0">Batman T-shirt</a></div>
+            <div>{{ item.name }}</div>
         </div>
         <div>
-            <div>৳ 250</div>
+            <div>৳ {{ item.price }}</div>
             <div style="margin-top:10px">
-                <div disabled="disabled" class="button">
-                    <span>
+                <div :disabled="item.amount == 1" class="button">
+                    <span @click="$store.dispatch('removeCartItem', {item: item, remove: false})">
                         <icon name="minus-circle" scale="1" :style="{ verticalAlign: 'middle'}"></icon>
                     </span>
                 </div>
                 <div class="button">
-                    <span>1</span>
+                    <span>{{ item.amount }}</span>
                 </div>
                 <div class="button">
-                    <span>
+                    <span @click="$store.dispatch('addCartItem', item)">
                         <icon name="plus-circle" scale="1" :style="{ verticalAlign: 'middle'}"></icon>
                     </span>
                 </div>
             </div>
-            <div style="float:right">৳ 250</div>
+            <div style="float:right">৳ {{ item.totalPrice }}</div>
         </div>            
     </div>
 </template>
@@ -39,7 +39,7 @@ import 'vue-awesome/icons/plus-circle'
 import 'vue-awesome/icons/minus-circle'
 import 'vue-awesome/icons/remove'
 export default {
-  
+    props: ['item']
 }
 </script>
 

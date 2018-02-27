@@ -5,7 +5,7 @@
             <h5 class="text-center">{{ item.name }}</h5>
             <h4 class="text-center">৳ {{ item.price }}</h4>
             <div class="add-to-cart-container">
-                <span class="add-to-cart">Add to Cart</span>
+                <span @click="addToCart()" class="add-to-cart">Add to Cart</span>
             </div>
         </div>
     </div>
@@ -15,6 +15,11 @@
 <script>
 export default {
     props: ['name'],
+    methods: {
+        addToCart(item) {            
+            this.$store.dispatch('addCartItem', this.item);
+        }
+    },
     computed: {
         randomImageSrc() {
             let firstNumber = (Math.random() * 10).toPrecision(1);
@@ -28,13 +33,19 @@ export default {
             randomPrice = randomPrice.includes('.')? randomPrice.slice(0, randomPrice.indexOf('.')) : randomPrice;
             return parseInt(randomPrice);
         },
-        item() {
-            let item = {
+        randomId() {
+            let timeStamp = Math.floor(Date.now() / 1000);
+			let random = Math.round(Math.random()*1000);
+			let id = timeStamp + random;
+			return id;
+        },
+        item() {                   
+            return {
+                id: this.randomId,
                 name: this._props.name,
                 price: this.randomPrice,
                 imageUrl: this.randomImageSrc
-            }            
-            return item;
+            };
         }
     }
 }
