@@ -4,50 +4,44 @@
         <div class="details">
             <h5 class="text-center">{{ item.name }}</h5>
             <h4 class="text-center">৳ {{ item.price }}</h4>
-            <div class="add-to-cart-container">
-                <span @click="addToCart()" class="add-to-cart">Add to Cart</span>
+            <div class="add-to-cart-container" v-if="item.variant.length == 0">
+                <span @click="addToCart" class="add-to-cart">Add to Cart</span>
             </div>
+            <div class="show-variant-container" v-if="item.variant.length > 0">
+                <span @click="showVariant" class="add-to-cart options">More Options . . .</span>
+            </div>
+            <variant-modal v-if="showModal" :item="$store.getters.currentlySelectedProductWithVariants"></variant-modal>
         </div>
     </div>
 </template>
 
 
 <script>
+import VariantModal from './VariantModal.vue';
 export default {
-    props: ['name'],
+    props: ['item'],
+    components: {
+        'variant-modal': VariantModal
+    },
     methods: {
-        addToCart(item) {            
-            this.$store.dispatch('addCartItem', this.item);
+        showVariant() {            
+            this.$store.dispatch('showMoreOptionsOfCurrentProduct', this.currentItem);
+        },        
+        addToCart() {
+            this.$store.dispatch('addCartItem', this.currentItem);            
         }
     },
     computed: {
-        randomImageSrc() {
-            let firstNumber = (Math.random() * 10).toPrecision(1);
-            let secondNumber = (Math.random() * 10).toPrecision(1);
-            let randomImageId = `${firstNumber}-${secondNumber}`;
-            let imageUrl = `https://placeimg.com/400/300/any?${randomImageId}`;
-            return imageUrl;
+        currentItem() {            
+            const item = Object.assign({}, this._props.item);
+            return item;
         },
-        randomPrice() {
-            let randomPrice = (Math.random() * 1000).toPrecision(3);
-            randomPrice = randomPrice.includes('.')? randomPrice.slice(0, randomPrice.indexOf('.')) : randomPrice;
-            return parseInt(randomPrice);
-        },
-        randomId() {
-            let timeStamp = Math.floor(Date.now() / 1000);
-			let random = Math.round(Math.random()*1000);
-			let id = timeStamp + random;
-			return id;
-        },
-        item() {                   
-            return {
-                id: this.randomId,
-                name: this._props.name,
-                price: this.randomPrice,
-                imageUrl: this.randomImageSrc
-            };
+        showModal() {
+            if(Object.keys(this.$store.getters.currentlySelectedProductWithVariants).length > 0) {
+                return true;
+            } return false;
         }
-    }
+    },
 }
 </script>
 
@@ -72,7 +66,14 @@ export default {
     cursor: pointer;    
     background-color: #ffd875;
 }
+.options {
+    background-color: #edad77;
+}
 
+.show-variant-container :active{
+    font-weight: 700;
+    background-color: #f1b212; 
+}
 .add-to-cart-container :active {
     font-weight: 700;
     background-color: #f1b212;    

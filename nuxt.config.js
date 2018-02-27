@@ -1,9 +1,12 @@
+require('dotenv').config();
 const pkg = require('./package')
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'universal',
-
+  env: {
+    apiBaseUrl: process.env.API_BASE_URL
+  },
   /*
   ** Headers of the page
   */

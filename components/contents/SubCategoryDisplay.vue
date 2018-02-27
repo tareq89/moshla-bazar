@@ -1,25 +1,39 @@
 <template>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" v-show="items.length > 0">
             <h3 class="text-left">{{ category.name }}</h3>
         </div>
-        <sub-category-item v-for="n in numbers" :key="n" :name="category.name + ' ' + n"/>
+        <sub-category-item v-for="item in items" :key="item.id" :item="item" v-show="items.length > 0"/>
+        <div class="spinner" v-show="items.length == 0"><icon name="spinner" pulse scale="5"></icon></div>
     </div>
 </template>
 
 
 <script>
+import axios from 'axios';
 import SubCategoryItem from './SubCategoryItem.vue';
+import 'vue-awesome/icons/spinner';
 export default {
-  props: ['category'],
-  components: {
-      'sub-category-item': SubCategoryItem
-  },
-  data() {
-      return {
-          numbers: [1,2,3,4,5]
-      }
-  }
+    props: ['category'],
+    created() {
+        this.getItems();      
+    },
+    data() {
+        return {
+            items: []
+        }
+    },
+    components: {
+        'sub-category-item': SubCategoryItem
+    },
+    methods: {
+        getItems(){            
+            return axios.get(this.$store.getters.apiBaseUrl + `items?name=${this._props.category.name}`)
+                .then((response) => {
+                    this.items = response.data;
+                });      
+        }
+    }
 }
 </script>
 
@@ -37,5 +51,9 @@ img {
     border-radius: 0.25rem;
     max-width: 10vw;
     height: auto;
+}
+
+.spinner {
+    margin: 100px auto;
 }
 </style>

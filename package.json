@@ -5,7 +5,7 @@
   "author": "tareq89",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development API_BASE_URL=https://127.0.0.1:9000/api/ nodemon server/index.js --watch server",
+    "dev": "cross-env NODE_ENV=development API_BASE_URL=http://127.0.0.1:9000/api/ nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "node server/index.js",
     "generate": "nuxt generate",
@@ -15,12 +15,14 @@
     "@nuxtjs/axios": "^5.0.0",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.2",
+    "cross-env": "^5.0.1",
+    "dotenv": "^5.0.1",
     "express": "^4.15.3",
     "nuxt": "^1.0.0",
     "vue-awesome": "^2.3.4",
     "cross-env": "^5.0.1",
     "vuex": "^3.0.1",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0"    
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

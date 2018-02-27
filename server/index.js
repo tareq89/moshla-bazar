@@ -12,18 +12,6 @@ app.set('port', port)
 let config = require('../nuxt.config.js')
 config.dev = !(process.env.NODE_ENV === 'production')
 
-app.get('/api/categories', (req, res) => {
-  fs.readFile(__dirname + '/data/sidebar.json', 'utf-8', (err, data) => {
-    if (err) {      
-      res.json(err);
-    } else {      
-      data = JSON.parse(data);
-      res.json(data)
-    }
-  })  
-});
-
-
 async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)

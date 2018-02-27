@@ -3,12 +3,17 @@ import Vuex from 'vuex';
 const createStore = () => {
 		return new Vuex.Store({
 			state: {
+				apiBaseUrl: '',
 				currentContext: {},
 				categories: [],
 				sidebarOpen: true,
-				cartItems: []
+				cartItems: [],
+				currentlySelectedProductWithVariants: {}
 			},
 			mutations: {
+				setApiBaseUrl: (state, url) => {
+					state.apiBaseUrl = url;
+				},
 				setCategories: (state, categories) => {
 					function customizeCategories(categories, initialIndex = 0, immediateRoots = [], initialurl = '') {
 						for (let index in categories) {
@@ -33,28 +38,28 @@ const createStore = () => {
 					customizeCategories(categories);
 					state.categories = categories;
 				},
-				setCurrentContext: (state, { context, router}) => {						
+				setCurrentContext: (state, { context, router}) => {
 					if(typeof context === 'string') {
 						function findNode(categories) {
 							for(let category of categories) {
 								let partialNodeId = context.slice(0, category.nodeid.length);
 								if(partialNodeId === category.nodeid) {
 									if(category.nodeid === context) {
-										state.currentContext = category;										
+										state.currentContext = category;
 										break;
 									} else if (category.subcategories && category.subcategories.length > 0) {
 										findNode(category.subcategories);
 									}
 								}
-							}
+							}							
 						}
 						findNode(state.categories);
 					} else if(typeof context === 'object'){
 						state.currentContext = context;
-					}					
+					}
 					if(state.currentContext.url) {
 						router.push('/category/' + state.currentContext.url);
-					} else {					
+					} else {
 						router.push('/');
 					}
 				},
@@ -71,41 +76,41 @@ const createStore = () => {
 					}
 					findNodeByUrl(state.categories);
 				},
-				setExpandFlag: (state, params) => {					
-					function findNode(categories) {						
+				setExpandFlag: (state, params) => {
+					function findNode(categories) {
 						for(let category of categories) {
 							let partialNodeId = params.nodeid.slice(0, category.nodeid.length);
 
 							// close or expand menu if clicked in expand-close icon, don't affect other menu states
-							
+
 							// checking whether the current nodeid is partially matching from the beginning with the param.nodeid
-							if(partialNodeId === category.nodeid) { 
+							if(partialNodeId === category.nodeid) {
 								// checking whether the current nodeid is exactly matching with the param.nodeid
-								if(category.nodeid === params.nodeid) { 
+								if(category.nodeid === params.nodeid) {
 									// setting currently matched leaf nodes sibling nodes expand to false
-									if((category.subcategories === undefined || category.subcategories.length == 0)) { 
+									if((category.subcategories === undefined || category.subcategories.length == 0)) {
 										for(let _category of categories) {
 											_category.expand = false;
 										}
 									}
-									category.expand = params.expand? true : !category.expand;									
-									if(params.closeOthers && category.subcategories && category.subcategories.length > 0) {										
+									category.expand = params.expand? true : !category.expand;
+									if(params.closeOthers && category.subcategories && category.subcategories.length > 0) {
 										function keepClosing(categories) {
 											for(let category of categories) {
 												category.expand = false;
 												if(category.subcategories && category.subcategories.length > 0) {
 													keepClosing(category.subcategories);
 												}
-											}						
+											}
 										}
 										keepClosing(category.subcategories);
-									}									
+									}
 								// since current nodeid is partially matched, so desired node must be in the subcategories
-								} else if(category.subcategories && category.subcategories.length > 0) { 
-									findNode(category.subcategories);									
+								} else if(category.subcategories && category.subcategories.length > 0) {
+									findNode(category.subcategories);
 								}
 							// close other expanded menu if clicked on menu text
-							} else if(params.closeOthers) { 
+							} else if(params.closeOthers) {
 								category.expand = false;
 								if(category.subcategories && category.subcategories.length > 0) {
 									findNode(category.subcategories);
@@ -123,16 +128,15 @@ const createStore = () => {
 							if(category.subcategories && category.subcategories.length > 0) {
 								keepClosing(category.subcategories);
 							}
-						}						
+						}
 					}
 					keepClosing(state.categories);
-					
+
 				},
 				toggleSidebar: (state) => {
-					state.sidebarOpen = !state.sidebarOpen;					
+					state.sidebarOpen = !state.sidebarOpen;
 				},
 				addCartItem: (state, item) => {
-					console.log(item)
 					let isItemNew = true;
 					for(let existingItem of state.cartItems) {
 						if(existingItem.id === item.id) {
@@ -147,7 +151,7 @@ const createStore = () => {
 						state.cartItems.push(item);
 					}
 				},
-				removeCartItem: (state, {item, remove}) => {					
+				removeCartItem: (state, {item, remove}) => {
 					for(let index in state.cartItems) {
 						let existingItem = state.cartItems[index];
 						if(existingItem.id === item.id) {
@@ -158,13 +162,22 @@ const createStore = () => {
 							} else {
 								state.cartItems[index].amount -= 1;
 								state.cartItems[index].totalPrice = state.cartItems[index].amount * state.cartItems[index].price;
-							}							
+							}
 						}
-					}					
+					}
+				},
+				showMoreOptionsOfCurrentProduct: (state, item) => {					
+					state.currentlySelectedProductWithVariants = item;					
+				},
+				hideMoreOptionsOfCurrentProduct: (state) => {
+					state.currentlySelectedProductWithVariants = {};
 				}
 			},
 			getters: {
-				categories : (state) => {
+				apiBaseUrl: (state) => {
+					return state.apiBaseUrl;
+				},
+				categories: (state) => {
 					return state.categories;
 				},
 				sidebarOpen: (state) => {
@@ -175,13 +188,20 @@ const createStore = () => {
 				},
 				cartItems : (state) => {
 					return state.cartItems;
+				},
+				currentlySelectedProductWithVariants: (state) => {
+					return state.currentlySelectedProductWithVariants;
 				}
+				
 			},
 			actions: {
-				setCategories : (context, categories) => {					
+				setApiBaseUrl: (context, url) => {
+					context.commit('setApiBaseUrl', url);
+				},
+				setCategories : (context, categories) => {
 					context.commit('setCategories', categories);
 				},
-				setCurrentContext: (context, currentContext) => {										
+				setCurrentContext: (context, currentContext) => {
 					context.commit('setCurrentContext', currentContext);
 				},
 				findAndSetContextByUrl: (context, url) => {
@@ -190,7 +210,7 @@ const createStore = () => {
 				setExpandFlag: (context, params) => {
 					context.commit('setExpandFlag', params);
 				},
-				setExpandFlagTrueAndSelectAndCloseOthers: (context, nodeid) => {					
+				setExpandFlagTrueAndSelectAndCloseOthers: (context, nodeid) => {
 					context.commit('setExpandFlag', {
 						nodeid: nodeid,
 						expand: true,
@@ -208,7 +228,14 @@ const createStore = () => {
 				},
 				removeCartItem: (context, params) => {
 					context.commit('removeCartItem', params);
+				},
+				showMoreOptionsOfCurrentProduct: (context, params) => {					
+					context.commit('showMoreOptionsOfCurrentProduct', params);
+				},
+				hideMoreOptionsOfCurrentProduct: (context) => {
+					context.commit('hideMoreOptionsOfCurrentProduct');
 				}
+
 			}
 		})
 	}
