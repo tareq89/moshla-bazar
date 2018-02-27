@@ -52,7 +52,7 @@ h2 {
     font-style: italic;
     font-weight: bolder;    
 }
-#topbar {
+#topbar {    
     background-color: #ffd875;
 }
 #menu-bar-button {    
