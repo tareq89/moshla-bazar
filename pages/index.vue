@@ -9,18 +9,22 @@ export default {
 	components: {
 		'category-display': CategoryDisplay
 	},
-  	asyncData(context) {
+  	asyncData(context) {		
 		const apiBaseUrl = context.env.apiBaseUrl;
-		return axios.get(apiBaseUrl + 'categories')
+		return axios.get(apiBaseUrl +'categories')
 			.then((response) => {          
-				let categories = response.data;				
-				return { categories };
+				let asyncdata = {
+					apiBaseUrl: apiBaseUrl,
+					categories: response.data
+				} 
+				return { asyncdata };
 			});
   	},
-  	created() {		
+  	created() {		  
 		if(this.$store.getters.categories.length == 0) {
-			this.$store.dispatch('setCategories', this.categories); 
-		}    
+			this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);			
+            this.$store.dispatch('setCategories', this.asyncdata.categories);            
+		}
   	}
 }
 </script>

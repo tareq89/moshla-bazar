@@ -3,12 +3,16 @@ import Vuex from 'vuex';
 const createStore = () => {
 		return new Vuex.Store({
 			state: {
+				apiBaseUrl: '',
 				currentContext: {},
 				categories: [],
 				sidebarOpen: true,
 				cartItems: []
 			},
 			mutations: {
+				setApiBaseUrl: (state, url) => {
+					state.apiBaseUrl = url;
+				},
 				setCategories: (state, categories) => {
 					function customizeCategories(categories, initialIndex = 0, immediateRoots = [], initialurl = '') {
 						for (let index in categories) {
@@ -131,8 +135,7 @@ const createStore = () => {
 				toggleSidebar: (state) => {
 					state.sidebarOpen = !state.sidebarOpen;					
 				},
-				addCartItem: (state, item) => {
-					console.log(item)
+				addCartItem: (state, item) => {					
 					let isItemNew = true;
 					for(let existingItem of state.cartItems) {
 						if(existingItem.id === item.id) {
@@ -141,7 +144,7 @@ const createStore = () => {
 							isItemNew = false;
 						}
 					}
-					if(isItemNew) {
+					if(isItemNew) {						
 						item.amount = 1;
 						item.totalPrice = item.amount * item.price;
 						state.cartItems.push(item);
@@ -164,7 +167,10 @@ const createStore = () => {
 				}
 			},
 			getters: {
-				categories : (state) => {
+				apiBaseUrl: (state) => {
+					return state.apiBaseUrl;
+				},
+				categories: (state) => {
 					return state.categories;
 				},
 				sidebarOpen: (state) => {
@@ -178,6 +184,9 @@ const createStore = () => {
 				}
 			},
 			actions: {
+				setApiBaseUrl: (context, url) => {
+					context.commit('setApiBaseUrl', url);
+				},
 				setCategories : (context, categories) => {					
 					context.commit('setCategories', categories);
 				},

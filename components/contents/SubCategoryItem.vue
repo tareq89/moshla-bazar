@@ -5,7 +5,7 @@
             <h5 class="text-center">{{ item.name }}</h5>
             <h4 class="text-center">৳ {{ item.price }}</h4>
             <div class="add-to-cart-container">
-                <span @click="addToCart()" class="add-to-cart">Add to Cart</span>
+                <span @click="addToCart" class="add-to-cart">Add to Cart</span>
             </div>
         </div>
     </div>
@@ -14,40 +14,13 @@
 
 <script>
 export default {
-    props: ['name'],
+    props: ['item'],
     methods: {
-        addToCart(item) {            
-            this.$store.dispatch('addCartItem', this.item);
+        addToCart() {
+            const item = Object.create(this._props.item);            
+            this.$store.dispatch('addCartItem', item);            
         }
-    },
-    computed: {
-        randomImageSrc() {
-            let firstNumber = (Math.random() * 10).toPrecision(1);
-            let secondNumber = (Math.random() * 10).toPrecision(1);
-            let randomImageId = `${firstNumber}-${secondNumber}`;
-            let imageUrl = `https://placeimg.com/400/300/any?${randomImageId}`;
-            return imageUrl;
-        },
-        randomPrice() {
-            let randomPrice = (Math.random() * 1000).toPrecision(3);
-            randomPrice = randomPrice.includes('.')? randomPrice.slice(0, randomPrice.indexOf('.')) : randomPrice;
-            return parseInt(randomPrice);
-        },
-        randomId() {
-            let timeStamp = Math.floor(Date.now() / 1000);
-			let random = Math.round(Math.random()*1000);
-			let id = timeStamp + random;
-			return id;
-        },
-        item() {                   
-            return {
-                id: this.randomId,
-                name: this._props.name,
-                price: this.randomPrice,
-                imageUrl: this.randomImageSrc
-            };
-        }
-    }
+    }    
 }
 </script>
 

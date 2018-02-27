@@ -24,6 +24,7 @@ export default {
                 context: {},
                 router: this.$router
             });
+            console.log(this)
       },
       click: function(nodeid) {            
             this.$store.dispatch('setExpandFlagTrueAndSelectAndCloseOthers', nodeid);
