@@ -9,8 +9,9 @@ export default {
 	components: {
 		'category-display': CategoryDisplay
 	},
-  	asyncData(context) {	  	
-		return axios.get('http://127.0.0.1:3000/api/categories')
+  	asyncData(context) {
+		const apiBaseUrl = context.env.apiBaseUrl;
+		return axios.get(apiBaseUrl + 'categories')
 			.then((response) => {          
 				let categories = response.data;				
 				return { categories };
