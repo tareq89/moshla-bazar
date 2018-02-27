@@ -6,28 +6,28 @@
                     <icon name="shopping-cart" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
                 </span>
             </div>
-            <div class="text-center">{{ 0 }} Items</div>
-            <div id="summary-taka" class="text-center">{{ 0 }} taka</div>
+            <div class="text-center">{{ totalItems }} Items</div>
+            <div id="summary-taka" class="text-center">৳ {{ totalPrice }}</div>
         </div>
-        <div id="full-page-opacity" v-show="showMainCart" @click="toggle">
-        </div>
+
+        <div id="full-page-opacity" v-show="showMainCart" @click="toggle"></div>
+
         <div id="cart-body" v-show="showMainCart">
             <div id="cart-body-title">Shopping Cart</div>
             <div id="cart-body-close" @click="toggle">
                 <icon name="arrow-circle-o-right" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
             </div>
-            <div class="text-center">
+            <div class="text-center" v-show="totalItems > 0">
                 <span>
-                    <b>Total Item: {{ 5 }}</b>
+                    <b>Total Item: {{ totalItems }}</b>
                 </span>
             </div>
 
-            <cart-item /><cart-item /><cart-item /><cart-item />
-            <cart-item /><cart-item /><cart-item /><cart-item />
+            <cart-item v-for="item in $store.getters.cartItems" :key="item.id" :item="item"/>
 
-            <div id="check-out">
+            <div id="check-out" v-show="totalItems > 0">
                 <div id="total-taka">
-                    <div>  Total : ৳ 1200</div>
+                    <div>  Total : ৳ {{ totalPrice }}</div>
                 </div>                
                 <div class="place-order">
                     <div>Place Order</div>                    
@@ -49,6 +49,22 @@ export default {
         return {
             showMainCart: false,
             showSummaryCart: true,
+        }
+    },
+    computed: {
+        totalItems() {
+            let totalItem = 0;
+            for(let item of this.$store.getters.cartItems) {
+                totalItem += item.amount;
+            }
+            return totalItem;
+        },
+        totalPrice() {
+            let totalprice = 0;
+            for(let item of this.$store.getters.cartItems) {
+                totalprice += item.totalPrice;
+            }
+            return totalprice;
         }
     },
     methods: {
