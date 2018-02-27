@@ -10,7 +10,7 @@
             <div class="show-variant-container" v-if="item.variant.length > 0">
                 <span @click="showVariant" class="add-to-cart options">More Options . . .</span>
             </div>
-            <variant-modal v-if="showModal" @close="showModal = false"></variant-modal>
+            <variant-modal v-if="showModal" :item="$store.getters.currentlySelectedProductWithVariants"></variant-modal>
         </div>
     </div>
 </template>
@@ -23,20 +23,25 @@ export default {
     components: {
         'variant-modal': VariantModal
     },
-    data() {
-        return {
-            showModal: false
+    methods: {
+        showVariant() {            
+            this.$store.dispatch('showMoreOptionsOfCurrentProduct', this.currentItem);
+        },        
+        addToCart() {
+            this.$store.dispatch('addCartItem', this.currentItem);            
         }
     },
-    methods: {
-        showVariant() {
-            this.showModal = true;
+    computed: {
+        currentItem() {            
+            const item = Object.assign({}, this._props.item);
+            return item;
         },
-        addToCart() {
-            const item = Object.create(this._props.item);            
-            this.$store.dispatch('addCartItem', item);            
+        showModal() {
+            if(Object.keys(this.$store.getters.currentlySelectedProductWithVariants).length > 0) {
+                return true;
+            } return false;
         }
-    }    
+    },
 }
 </script>
 
