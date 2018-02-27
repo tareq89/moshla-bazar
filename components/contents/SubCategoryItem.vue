@@ -4,18 +4,34 @@
         <div class="details">
             <h5 class="text-center">{{ item.name }}</h5>
             <h4 class="text-center">৳ {{ item.price }}</h4>
-            <div class="add-to-cart-container">
+            <div class="add-to-cart-container" v-if="item.variant.length == 0">
                 <span @click="addToCart" class="add-to-cart">Add to Cart</span>
             </div>
+            <div class="show-variant-container" v-if="item.variant.length > 0">
+                <span @click="showVariant" class="add-to-cart options">More Options . . .</span>
+            </div>
+            <variant-modal v-if="showModal" @close="showModal = false"></variant-modal>
         </div>
     </div>
 </template>
 
 
 <script>
+import VariantModal from './VariantModal.vue';
 export default {
     props: ['item'],
+    components: {
+        'variant-modal': VariantModal
+    },
+    data() {
+        return {
+            showModal: false
+        }
+    },
     methods: {
+        showVariant() {
+            this.showModal = true;
+        },
         addToCart() {
             const item = Object.create(this._props.item);            
             this.$store.dispatch('addCartItem', item);            
@@ -45,7 +61,14 @@ export default {
     cursor: pointer;    
     background-color: #ffd875;
 }
+.options {
+    background-color: #edad77;
+}
 
+.show-variant-container :active{
+    font-weight: 700;
+    background-color: #f1b212; 
+}
 .add-to-cart-container :active {
     font-weight: 700;
     background-color: #f1b212;    
