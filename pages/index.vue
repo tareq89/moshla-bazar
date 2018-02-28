@@ -22,7 +22,7 @@ export default {
   	},
   	created() {		  
 		if(this.$store.getters.categories.length == 0) {
-			this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);			
+			this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);
             this.$store.dispatch('setCategories', this.asyncdata.categories);            
 		}
   	}

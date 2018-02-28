@@ -27,7 +27,7 @@ export default {
         showVariant() {            
             this.$store.dispatch('showMoreOptionsOfCurrentProduct', this.currentItem);
         },        
-        addToCart() {
+        addToCart() {            
             this.$store.dispatch('addCartItem', this.currentItem);            
         }
     },
