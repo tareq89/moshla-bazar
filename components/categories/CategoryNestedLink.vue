@@ -3,13 +3,13 @@
         <span> 
             <a v-on:click="clickAllCategory()">
                 <span>All Categories</span>
-                <span v-if="currentContextLength">{{ ' > ' }}</span>
+                <span v-if="currentContextLength">&nbsp;{{ '>' }}&nbsp;</span>
             </a> 
         </span>
         <span v-for="(root, index) in $store.getters.currentContext.immediateroots" :key="index"> 
             <a v-on:click="click(root.nodeid)">
                 <span>{{root.name}}</span>
-                <span v-if="index < $store.getters.currentContext.immediateroots.length-1">{{ ' > ' }}</span>
+                <span v-if="index < $store.getters.currentContext.immediateroots.length-1">&nbsp;{{ '>' }}&nbsp;</span>
             </a> 
         </span>
     </div>

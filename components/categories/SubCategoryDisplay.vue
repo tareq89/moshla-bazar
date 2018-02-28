@@ -41,6 +41,9 @@ export default {
 <style scoped>
 h3 {
     white-space: nowrap;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 10px;
 }
 
 img {

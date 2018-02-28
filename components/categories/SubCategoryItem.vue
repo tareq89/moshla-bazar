@@ -1,33 +1,33 @@
 <template>
     <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 item">
-        <img class="img-thumbnail" :src="item.imageUrl" :alt="item.name">
         <div class="details">
-            <h5 class="text-center">{{ item.name }}</h5>
-            <h4 class="text-center">৳ {{ item.price }}</h4>
-            <div class="add-to-cart-container" v-if="item.variant.length == 0">
+            <div class="content" @click="$router.push(`/product${item.url}`)">
+                <img class="img-thumbnail" :src="item.imageUrl" :alt="item.name">
+                <h5 class="text-center">{{ item.name }}</h5>
+                <h4 class="text-center">৳ {{ item.price }}</h4>
+            </div>
+            <div class="add-to-cart-container" v-if="item.availableVariant.length == 0">
                 <span @click="addToCart" class="add-to-cart">Add to Cart</span>
             </div>
-            <div class="show-variant-container" v-if="item.variant.length > 0">
-                <span @click="showVariant" class="add-to-cart options">More Options . . .</span>
-            </div>
-            <variant-modal v-if="showModal" :item="$store.getters.currentlySelectedProductWithVariants"></variant-modal>
+            <div class="show-variant-container" v-if="item.availableVariant.length > 0">                
+                <nuxt-link class="add-to-cart options" :to="`/product${item.url}`">
+                    <span>More Options . . .</span>
+                </nuxt-link>
+            </div>            
         </div>
     </div>
 </template>
 
 
 <script>
-import VariantModal from './VariantModal.vue';
+
 export default {
     props: ['item'],
-    components: {
-        'variant-modal': VariantModal
-    },
     methods: {
         showVariant() {            
             this.$store.dispatch('showMoreOptionsOfCurrentProduct', this.currentItem);
         },        
-        addToCart() {
+        addToCart() {            
             this.$store.dispatch('addCartItem', this.currentItem);            
         }
     },
@@ -56,6 +56,9 @@ export default {
 .details {
     position: relative;
 }
+.content {
+    cursor: pointer;
+}
 .add-to-cart {
     width: 100%;    
     height: 40px;
@@ -66,8 +69,11 @@ export default {
     cursor: pointer;    
     background-color: #ffd875;
 }
+
 .options {
     background-color: #edad77;
+    text-decoration: none;
+    color: black;
 }
 
 .show-variant-container :active{

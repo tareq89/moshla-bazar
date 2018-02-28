@@ -4,7 +4,7 @@
 
 <script>
 import axios from 'axios';
-import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
+import CategoryDisplay from '../components/categories/CategoryDisplay.vue';
 export default {
 	components: {
 		'category-display': CategoryDisplay
@@ -22,7 +22,7 @@ export default {
   	},
   	created() {		  
 		if(this.$store.getters.categories.length == 0) {
-			this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);			
+			this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);
             this.$store.dispatch('setCategories', this.asyncdata.categories);            
 		}
   	}

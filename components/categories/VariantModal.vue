@@ -15,7 +15,14 @@
                             <!-- Price -->
                         </div>
                     </div>
+plan how can you add multiple configured same product in the order cart,
+sicne order cart existing product checking now work on based of product.id
 
+may be one of the approach might be to also check if the product that is being 
+added to the cart have the same name && same id
+
+because differently configured products will not have same name ever even if 
+the product id is same
                     <div class="modal-footer">                    
                         <button class="modal-default-button" @click="hideVariant">
                             OK
