@@ -4,7 +4,7 @@
 
 <script>
 import axios from 'axios';
-import CategoryDisplay from '../components/contents/CategoryDisplay.vue';
+import CategoryDisplay from '../components/categories/CategoryDisplay.vue';
 export default {
 	components: {
 		'category-display': CategoryDisplay
