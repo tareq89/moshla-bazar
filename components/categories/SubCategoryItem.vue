@@ -1,16 +1,16 @@
 <template>
     <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 item">
         <div class="details">
-            <div class="content" @click="$router.push(`/product/${item.url}`)">
+            <div class="content" @click="$router.push(`/product${item.url}`)">
                 <img class="img-thumbnail" :src="item.imageUrl" :alt="item.name">
                 <h5 class="text-center">{{ item.name }}</h5>
                 <h4 class="text-center">৳ {{ item.price }}</h4>
             </div>
-            <div class="add-to-cart-container" v-if="item.variant.length == 0">
+            <div class="add-to-cart-container" v-if="item.availableVariant.length == 0">
                 <span @click="addToCart" class="add-to-cart">Add to Cart</span>
             </div>
-            <div class="show-variant-container" v-if="item.variant.length > 0">                
-                <nuxt-link class="add-to-cart options" :to="'/product/'+item.name">
+            <div class="show-variant-container" v-if="item.availableVariant.length > 0">                
+                <nuxt-link class="add-to-cart options" :to="`/product${item.url}`">
                     <span>More Options . . .</span>
                 </nuxt-link>
             </div>            

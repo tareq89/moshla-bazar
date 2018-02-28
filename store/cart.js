@@ -1,8 +1,12 @@
 const CartStore = {
     state: {
         cartItems: [],
+        cartOpen: false,
     },
     mutations: {
+        toggleCart: (state, toggle) => {
+            state.cartOpen = toggle;
+        },
         addCartItem: (state, item) => {
             let isItemNew = true;
             for(let existingItem of state.cartItems) {
@@ -35,11 +39,17 @@ const CartStore = {
         },
     },
     getters: {
-        cartItems : (state) => {
+        cartItems: (state) => {
             return state.cartItems;
         },
+        cartOpen: (state) => {
+            return state.cartOpen;
+        } 
     },
     actions: {
+        toggleCart: (context, toggle) => {
+            context.commit('toggleCart', toggle);
+        },
         addCartItem: (context, params) => {
             context.commit('addCartItem', params);
         },

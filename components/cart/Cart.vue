@@ -1,6 +1,6 @@
 <template>
   <div id="cart">
-        <div id="cart-summary" @click="toggle" v-show="showSummaryCart">
+        <div id="cart-summary" @click="toggle" v-show="!$store.getters.cartOpen">
             <div class="text-center">
                 <span>
                     <icon name="shopping-cart" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
@@ -10,9 +10,9 @@
             <div id="summary-taka" class="text-center">৳ {{ totalPrice }}</div>
         </div>
 
-        <div id="full-page-opacity" v-show="showMainCart" @click="toggle"></div>
+        <div id="full-page-opacity" v-show="$store.getters.cartOpen" @click="toggle"></div>
 
-        <div id="cart-body" v-show="showMainCart">
+        <div id="cart-body" v-show="$store.getters.cartOpen">
             <div id="cart-body-title">Shopping Cart</div>
             <div id="cart-body-close" @click="toggle">
                 <icon name="arrow-circle-o-right" scale="2" :style="{ verticalAlign: 'middle'}"></icon>
@@ -45,12 +45,6 @@ export default {
     components: {
         'cart-item': CartItem
     },
-    data() {
-        return {
-            showMainCart: false,
-            showSummaryCart: true,
-        }
-    },
     computed: {
         totalItems() {
             let totalItem = 0;
@@ -69,8 +63,7 @@ export default {
     },
     methods: {
         toggle() {
-            this.showMainCart = !this.showMainCart;
-            this.showSummaryCart = !this.showSummaryCart;
+            this.$store.dispatch('toggleCart', !this.$store.getters.cartOpen)
         }
     }
 }

@@ -4,13 +4,17 @@
 
 <script>
 import axios from 'axios';
-import ProductDisplay from '../../components/product/ProductDisplay';
+import ProductDisplay from '../../../components/product/ProductDisplay';
 export default {
     components: {
 		'product-display': ProductDisplay
 	},
   	asyncData(context) {
-		const productUrl = context.route.params.id;
+		const id = context.route.params.id;
+		const variant = context.route.params.variant;
+		const productUrl = `${variant}/${id}`;
+
+		console.log(productUrl)
 		const apiBaseUrl = context.env.apiBaseUrl;
 		let asyncdata = {};
 		return axios.get(apiBaseUrl +'categories')
@@ -22,8 +26,7 @@ export default {
 				return axios.get(apiBaseUrl +'product/' + productUrl)
 			})
 			.then((response) => {
-				asyncdata.product = response.data;
-				console.log(asyncdata)
+				asyncdata.product = response.data;				
 				return { asyncdata };
 			});
   	},
