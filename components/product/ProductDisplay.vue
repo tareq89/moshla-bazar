@@ -2,11 +2,37 @@
   <div :class="nuxtContainerClasses">
       <div class="row">
           <div class="col-md-6">
-              <img class="img-fluid" :src="$store.getters.currentProduct.imageUrl" :alt="$store.getters.currentProduct.name">
+              <img class="img-fluid" :src="product.imageUrl" :alt="product.name">
           </div>
           <div class="col-md-6">
-              <h1 class="display-4">{{$store.getters.currentProduct.name}}</h1>
-              <h3>Price: ৳ {{ $store.getters.currentProduct.price }}</h3>
+              <h2 class="">{{product.name}}</h2>
+              <h3>Price: ৳ {{ product.price }}</h3><br><br>
+              <div class="row" v-if="product.availableVariant !== undefined">
+                  <div class="col-md-12" v-for="(variant, index) in product.availableVariant" :key="index">
+                      <h4>{{ variant.type }}</h4>
+                      <div class="row">
+                        <div :class="{urlStyle: true, highlight: option.highlight, mute: option.mute}" 
+                            class="col-md-2" v-for="(option,index) in variant.options" :key="index">
+                            <nuxt-link :to="`/product${option.url}`">
+                                {{ option.value }}
+                            </nuxt-link>                                                        
+                        </div>
+                      </div>
+                    <br>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-5">
+                      <div class="add-to-cart-container" @click="addToCart" >
+                            <div>Add to Cart</div>
+                      </div>
+                  </div>
+                  <div class="col-md-5">
+                      <div class="add-to-cart-container" @click="buyNow" >
+                            <div>Buy Now</div>
+                      </div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="row">
@@ -14,8 +40,7 @@
               <h3>Description: </h3>
               <p>{{$store.getters.currentProduct.description}}</p>
           </div>
-      </div>
-      <!-- {{$store.getters.currentProduct}} -->
+      </div>      
   </div>
 </template>
 
@@ -29,7 +54,20 @@ export default {
                 'nuxt-container': true
             }
         },
+        product() {
+            const product = Object.assign({}, this.$store.getters.currentProduct);
+            return product;
+        }
 
+    },
+    methods: {
+        addToCart() {
+            this.$store.dispatch('addCartItem', this.product);
+        },
+        buyNow() {
+            this.$store.dispatch('addCartItem', this.product);
+            this.$store.dispatch('toggleCart', true);
+        }
     }
 }
 </script>
@@ -41,6 +79,43 @@ export default {
 }
 h3 {
     font-weight: 300;
+}
+.highlight {
+    border-color: #ffd875 !important;
+}
+.mute {
+    border: 4px dashed lightgrey !important;
+}
+.mute a {
+    color: grey;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.urlStyle {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    padding: 6px;
+    margin: 3px 10px;    
+    text-align: center;
+    border: 4px solid lightgrey;
+}
+
+.add-to-cart-container {
+    width: 100%;    
+    height: 40px;      
+    text-align: center;
+    cursor: pointer;
+    background-color: #ffd875;
+    line-height: 40px;
+    margin-left: -4px;
+}
+
+.add-to-cart-container :active {
+    font-weight: 700;
+    background-color: #f1b212;    
 }
 </style>
 

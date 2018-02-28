@@ -12,7 +12,7 @@ export default {
   	asyncData(context) {
 		const id = context.route.params.id;
 		const variant = context.route.params.variant;
-		const productUrl = `${variant}/${id}`;
+		const productUrl = `${id}/${variant}`;
 
 		console.log(productUrl)
 		const apiBaseUrl = context.env.apiBaseUrl;
@@ -28,6 +28,9 @@ export default {
 			.then((response) => {
 				asyncdata.product = response.data;				
 				return { asyncdata };
+			})
+			.catch((error) => {
+				
 			});
   	},
   	created() {		  

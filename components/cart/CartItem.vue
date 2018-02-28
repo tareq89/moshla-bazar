@@ -46,11 +46,13 @@ export default {
 
 <style scoped>
 .cart-item {
-    height: 150px;
+    height: auto;
     padding: 10px;
     border: 1px solid grey;
     margin: 14px;
     font-size: 14px;
+    position: relative;
+    overflow: auto;
 }
 .close-button {
     cursor: pointer;
