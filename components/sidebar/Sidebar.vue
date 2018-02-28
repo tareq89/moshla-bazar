@@ -7,8 +7,8 @@
 
 <script>
 import Vue from 'vue';
-import Category from '../components/category/Category.vue';
-import SubCategory from '../components/category/SubCategory.vue';
+import Category from './Category.vue';
+import SubCategory from './SubCategory.vue';
 
 Vue.component('category', Category);
 Vue.component('sub-category', SubCategory);

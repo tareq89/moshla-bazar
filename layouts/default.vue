@@ -12,8 +12,8 @@
 
 <script>
 import Topbar from '../components/Topbar.vue';
-import Sidebar from '../components/Sidebar.vue';
-import Cart from '../components/Cart.vue';
+import Sidebar from '../components/sidebar/Sidebar.vue';
+import Cart from '../components/cart/Cart.vue';
 
 export default {
   components: {
