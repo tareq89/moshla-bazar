@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 import VariablesStore from './variables';
 import CartStore from './cart';
 import CurrentContextStore from './currentContext';
-import CurrentlySelectedItemStore from './currentlySelectedItem';
+import CurrentProductStore from './currentProduct';
 import SidebarStore from './sidebar';
 import CategoriesStore from './categories';
 
@@ -13,7 +13,7 @@ const createStore = () => {
 			categories: CategoriesStore,
 			cart: CartStore,
 			currentContext: CurrentContextStore,
-			CurrentlySelectedItemStore: CurrentlySelectedItemStore,
+			currentProductStore: CurrentProductStore,
 			sidebar: SidebarStore
 		}
 	})
