@@ -64,6 +64,8 @@ export default {
     methods: {
         addToCart() {
             this.$store.dispatch('addCartItem', this.product);
+            // TODO: find a way to set current session cart data inside store
+            window.localStorage.setItem('cartItems', JSON.stringify(this.$store.getters.cartItems));
         },
         buyNow() {
             this.$store.dispatch('addCartItem', this.product);
