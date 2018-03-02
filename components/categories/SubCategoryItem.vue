@@ -3,8 +3,10 @@
         <div class="details">
             <div class="content" @click="$router.push(`/product${item.url}`)">
                 <img class="img-thumbnail" :src="item.imageUrl" :alt="item.name">
-                <h5 class="text-center">{{ item.name }}</h5>
-                <h4 class="text-center">৳ {{ item.price }}</h4>
+                <div class="item-desc">
+                    <div>{{ item.name }}</div>
+                    <div>৳ {{ item.price }}</div>
+                </div>
             </div>
             <div class="add-to-cart-container" v-if="item.availableVariant.length == 0">
                 <span @click="addToCart" class="add-to-cart">Add to Cart</span>
@@ -20,7 +22,6 @@
 
 
 <script>
-
 export default {
     props: ['item'],
     methods: {
@@ -52,6 +53,10 @@ export default {
     word-wrap: break-word;
     margin: 0px 21px 50px 22px;
     padding: 0;
+}
+.item-desc {
+    margin-left: 5px;
+    padding-bottom: 5px;
 }
 .details {
     position: relative;

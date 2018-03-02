@@ -11,7 +11,7 @@ export default {
 	},
   	asyncData(context) {		
 		const apiBaseUrl = context.env.apiBaseUrl;
-		return axios.get(apiBaseUrl +'categories')
+		return axios.get(apiBaseUrl + 'categories')
 			.then((response) => {          
 				let asyncdata = {
 					apiBaseUrl: apiBaseUrl,

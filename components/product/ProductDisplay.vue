@@ -11,12 +11,13 @@
                   <div class="col-md-12" v-for="(variant, index) in product.availableVariant" :key="index">
                       <h4>{{ variant.type }}</h4>
                       <div class="row">
-                        <div :class="{urlStyle: true, highlight: option.highlight, mute: option.mute}" 
-                            class="col-md-2" v-for="(option,index) in variant.options" :key="index">
-                            <nuxt-link :to="`/product${option.url}`">
+                        
+                            <nuxt-link v-for="(option,index) in variant.options" :key="index"
+                             class="col-md-2" :class="{urlStyle: true, highlight: option.highlight, mute: option.mute}" 
+                              :to="`/product${option.url}`">
                                 {{ option.value }}
                             </nuxt-link>                                                        
-                        </div>
+                        
                       </div>
                     <br>
                   </div>
