@@ -7,6 +7,9 @@ const CartStore = {
         toggleCart: (state, toggle) => {
             state.cartOpen = toggle;
         },
+        setCartItems: (state, cartItems) => {
+            state.cartItems = cartItems;
+        },
         addCartItem: (state, item) => {
             let isItemNew = true;
             for(let existingItem of state.cartItems) {
@@ -56,6 +59,11 @@ const CartStore = {
         removeCartItem: (context, params) => {
             context.commit('removeCartItem', params);
         },
+        setCartItems: (context, params) => {            
+            if(context.state.cartItems.length == 0) {
+                context.commit('setCartItems', params);
+            }
+        }
     }
 }
 
