@@ -5,17 +5,17 @@
 <script>
 import axios from 'axios';
 import ProductDisplay from '../../../components/product/ProductDisplay';
+
 export default {
     components: {
 		'product-display': ProductDisplay
 	},
-  	asyncData(context) {
+  	asyncData(context) {		
+		const apiBaseUrl = context.env.apiBaseUrl;
 		const id = context.route.params.id;
 		const variant = context.route.params.variant;
 		const productUrl = `${id}/${variant}`;
-
-		console.log(productUrl)
-		const apiBaseUrl = context.env.apiBaseUrl;
+				
 		let asyncdata = {};
 		return axios.get(apiBaseUrl +'categories')
 			.then((response) => {
@@ -30,11 +30,13 @@ export default {
 				return { asyncdata };
 			})
 			.catch((error) => {
-				
+				console.error(error);
 			});
   	},
   	created() {		  
-		this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);			
+		this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);
+		console.log(this.$route.params);
+		// this.$store.dispatch('findAndSetContextByUrl', this.$route.params.id);			
 		this.$store.dispatch('setCurrentProduct', this.asyncdata.product);
 		if(this.$store.getters.categories.length == 0) {
 			this.$store.dispatch('setCategories', this.asyncdata.categories);            

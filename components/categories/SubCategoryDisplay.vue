@@ -13,6 +13,7 @@
 import axios from 'axios';
 import SubCategoryItem from './SubCategoryItem.vue';
 import 'vue-awesome/icons/spinner';
+
 export default {
     props: ['category'],
     created() {

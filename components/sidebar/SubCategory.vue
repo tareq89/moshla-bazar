@@ -24,5 +24,4 @@ export default {
     margin-left: 30px;
     border-left: 1px solid black;
 }
-
 </style>

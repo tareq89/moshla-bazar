@@ -34,10 +34,12 @@
     </div>
 </template>
 
+
 <script>
 import 'vue-awesome/icons/plus-circle'
 import 'vue-awesome/icons/minus-circle'
 import 'vue-awesome/icons/remove'
+
 export default {
     props: ['item']
 }

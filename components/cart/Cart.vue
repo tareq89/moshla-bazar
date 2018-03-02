@@ -37,10 +37,12 @@
   </div>
 </template>
 
+
 <script>
 import 'vue-awesome/icons/shopping-cart';
 import 'vue-awesome/icons/arrow-circle-o-right';
 import CartItem from './CartItem';
+
 export default {
     components: {
         'cart-item': CartItem
@@ -71,8 +73,6 @@ export default {
 
 
 <style scoped>
-
-
 #cart-summary {    
     z-index: 100;    
     right: 0;
@@ -139,11 +139,13 @@ export default {
     height: 100px;
     padding: 10px;
 }
+
 #total-taka {
     text-align: right;
     font-size: 16px;
     margin: 0px 15px 10px 0px;
 }
+
 .place-order {
     background-color: tomato;
     border: 1px solid black;
@@ -153,6 +155,7 @@ export default {
     border-radius: 5px;
     cursor: pointer;
 }
+
 div.place-order :active {
     background-color: red !important;
 
