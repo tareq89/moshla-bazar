@@ -41,7 +41,7 @@ import 'vue-awesome/icons/minus-circle'
 import 'vue-awesome/icons/remove'
 
 export default {
-    props: ['item']
+    props: ['item']    
 }
 </script>
 
