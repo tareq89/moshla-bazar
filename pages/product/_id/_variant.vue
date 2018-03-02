@@ -34,9 +34,7 @@ export default {
 			});
   	},
   	created() {		  
-		this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);
-		console.log(this.$route.params);
-		// this.$store.dispatch('findAndSetContextByUrl', this.$route.params.id);			
+		this.$store.dispatch('setApiBaseUrl', this.asyncdata.apiBaseUrl);				
 		this.$store.dispatch('setCurrentProduct', this.asyncdata.product);
 		if(this.$store.getters.categories.length == 0) {
 			this.$store.dispatch('setCategories', this.asyncdata.categories);            
