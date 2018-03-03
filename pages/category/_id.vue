@@ -11,7 +11,8 @@ export default {
 	},
   	asyncData(context) {		
 		const apiBaseUrl = context.env.apiBaseUrl;
-		return axios.get(apiBaseUrl +'categories')
+		if(process.server) {
+			return axios.get(apiBaseUrl +'categories')
 			.then((response) => {          
 				let asyncdata = {
 					apiBaseUrl: apiBaseUrl,
@@ -19,6 +20,7 @@ export default {
 				} 
 				return { asyncdata };
 			});
+		}		
   	},
   	created() {		  
 		if(this.$store.getters.categories.length == 0) {
