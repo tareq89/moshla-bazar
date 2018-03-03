@@ -15,7 +15,7 @@ const createStore = () => {
 			currentContext: CurrentContextStore,
 			currentProductStore: CurrentProductStore,
 			sidebar: SidebarStore
-		}
+		}		
 	})
 }
 

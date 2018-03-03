@@ -20,11 +20,6 @@ export default {
 		'topbar': Topbar,
 		'sidebar': Sidebar,
 		'cart': Cart
-	},
-	mounted() {
-		// TODO: find a way to load previous session cart data from store
-		let cartItems = JSON.parse(window.localStorage.getItem('cartItems')) || [];
-		this.$store.dispatch('setCartItems', cartItems);
 	}
 }
 </script>
