@@ -10,7 +10,7 @@
 
 
 <script>
-import axios from 'axios';
+import axios from '~/plugins/axios';
 import SubCategoryItem from './SubCategoryItem.vue';
 import 'vue-awesome/icons/spinner';
 export default {
@@ -28,8 +28,9 @@ export default {
     },
     methods: {
         getItems(){            
-            return axios.get(this.$store.getters.apiBaseUrl + `items?name=${this._props.category.name}`)
+            return axios.get(`/items?name=${this._props.category.name}`)
                 .then((response) => {
+                    console.log(response.data)
                     this.items = response.data;
                 });      
         }

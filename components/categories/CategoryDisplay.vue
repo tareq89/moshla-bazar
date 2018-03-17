@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '~/plugins/axios';
 import CategoryNestedLink from './CategoryNestedLink';
 import SubCategoryDisplay from './SubCategoryDisplay.vue';
 export default {

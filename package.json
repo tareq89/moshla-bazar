@@ -5,7 +5,7 @@
   "author": "tareq89",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development API_BASE_URL=http://127.0.0.1:9000/api/ nodemon server/index.js --watch server",
+    "dev": "cross-env NODE_ENV=development API_BASE_URL=https://sleepy-falls-57156.herokuapp.com/api/ nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "node server/index.js",
     "generate": "nuxt generate",
